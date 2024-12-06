@@ -594,6 +594,29 @@
             document.body.style.height = `${100 / scale}%`;
     }
 
+
+	<!-- Models Auto Refresh -->
+	// Function to refresh the iframes for models
+	function refreshModelIframes() {
+		const modelIframes = document.querySelectorAll('#models-section .iframe-container iframe');
+		modelIframes.forEach(iframe => {
+			const src = iframe.src; // Get the current source
+			iframe.src = ""; // Clear the source temporarily
+			setTimeout(() => {
+				iframe.src = src; // Reload the original source
+			}, 50); // Slight delay to ensure refresh
+		});
+	}
+
+	// Set an interval to refresh the iframes every 3 minutes (180,000 milliseconds)
+	setInterval(() => {
+		refreshModelIframes();
+	}, 180000); // 3 minutes
+
+
+
+
+
 </script>
 </head>
 
@@ -620,8 +643,10 @@
 	
 	<!-- Right Menu -->
 	<div class="right-menu">
-			<ul><li><h2 style="font-weight: bold; text-decoration: underline; padding: 5px;">Resources</h2></li>
-			<li><a href="https://www.reddit.com/r/Piracy/wiki/megathread" target="_blank">Megathread</a></li>
+			<ul><li><h2 style="font-weight: bold; text-decoration: underline; padding: 5px;">Reddit</h2></li>
+			<li><a href="https://www.reddit.com/r/Piracy/wiki/megathread" target="_blank" style="color: gold; font-weight: bold;">Megathread</a></li>
+			
+			<ul><li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Computer</h2></li>
 			<li><a href="https://www.cg-gamespc.com/" target="_blank">CG Games PC</a></li>
 			<li><a href="https://atopgames.com/" target="_blank">Atop Games</a></li>
 			<li><a href="https://abandonwaregames.net/" target="_blank">Abandonware Games</a></li>
@@ -633,6 +658,10 @@
 			<li><a href="https://www.ankergames.net/" target="_blank">Anker Games</a></li>
 			<li><a href="https://fitgirl-repacks.site/" target="_blank">FitGirl Repacks</a></li>
 			<li><a href="https://www.steamrip.com/" target="_blank">SteamRip</a></li>
+			
+			<ul><li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Android</h2></li>
+			<li><a href="https://androeed.store/" target="_blank">Androeed</a></li>
+			<li><a href="https://modyolo.com/" target="_blank">Modyolo</a></li>
 		</ul>
 	</div>
 	
@@ -689,6 +718,8 @@
 				<iframe src="https://www.elitebabes.com/random/?sort=gallery" title="ModelGallery3"></iframe>
 			</div>
 		</div>
+
+		
 
 		<!-- Utility Section -->
 		<div id="utility-section" class="iframe-grid" style="display: none;">
