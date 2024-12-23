@@ -541,7 +541,16 @@
 		if (selectedSection) {
 			selectedSection.style.display = 'flex'; // Use flex to respect your iframe grid styling
 		}
-	}	
+
+		// Show or hide the models refresh button
+		const refreshModelsContainer = document.getElementById('refresh-models-container');
+		if (sectionId === 'models-section') {
+			refreshModelsContainer.style.display = 'flex'; // Show the button when Models section is active
+		} else {
+			refreshModelsContainer.style.display = 'none'; // Hide the button otherwise
+		}
+	}
+
 	
 	<!-- Password Lock -->
 	function unlockSection(sectionId, correctPassword) {
@@ -614,6 +623,18 @@
 	}, 180000); // 3 minutes
 
 
+	// Function to refresh the iframes for models
+	function refreshModelIframes() {
+		const modelIframes = document.querySelectorAll('#models-section .iframe-container iframe');
+		modelIframes.forEach(iframe => {
+			const src = iframe.src; // Get the current source
+			iframe.src = ""; // Clear the source temporarily
+			setTimeout(() => {
+				iframe.src = src; // Reload the original source
+			}, 50); // Slight delay to ensure refresh
+		});
+		console.log("All model iframes refreshed.");
+	}
 
 
 
@@ -736,14 +757,21 @@
     </main>
 
 	
-	<!-- Footer -->
-    <footer>
+	<footer>
+		<!-- Refresh Models Button -->
+		<p></p>
+		<div id="refresh-models-container" style="display: none; justify-content: center; align-items: center; margin-top: 10px;">
+			<button id="refresh-models" onclick="refreshModelIframes()" 
+					style="background-color: limegreen; color: white; border: none; border-radius: 50%; width: 10px; height: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); padding: 0;">
+			</button>
+		</div>
 		<p class="last-updated">Ticker Last Updated: <span id="last-updated-time"></span></p> 
-		<!-- IP Data-->
+		<!-- IP Data -->
 		<div id="ip-address-container" style="margin-top: 20px; color: limegreen; font-size: 1.2rem;">
 			Your Public IP Address: <span id="ip-address">Loading...</span>
 		</div>
-    </footer>
+	</footer>
+
 	
 	
 
