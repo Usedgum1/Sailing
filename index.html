@@ -604,24 +604,6 @@
     }
 
 
-	<!-- Models Auto Refresh -->
-	// Function to refresh the iframes for models
-	function refreshModelIframes() {
-		const modelIframes = document.querySelectorAll('#models-section .iframe-container iframe');
-		modelIframes.forEach(iframe => {
-			const src = iframe.src; // Get the current source
-			iframe.src = ""; // Clear the source temporarily
-			setTimeout(() => {
-				iframe.src = src; // Reload the original source
-			}, 50); // Slight delay to ensure refresh
-		});
-	}
-
-	// Set an interval to refresh the iframes every 3 minutes (180,000 milliseconds)
-	setInterval(() => {
-		refreshModelIframes();
-	}, 180000); // 3 minutes
-
 
 	// Function to refresh the iframes for models
 	function refreshModelIframes() {
