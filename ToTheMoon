@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		#gameContainer {
+			background-color: navy;
+			padding: 0px;
+			border-radius: 0px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			border: 5px solid black;
+		}
+
+		#controlPanel {
+			text-align: center;
+			margin-top: 40px;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+
+		#rocketWrapper {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			width: 100%;
+		}
+
+		#rocketContainer {
+			position: relative;
+			height: 400px;
+			width: 100%;
+			overflow: hidden;
+			background-color: black;
+		}
+
+		.backgroundScroll {
+			animation: backgroundScroll 20s linear infinite;
+		}
+
+		.backgroundPaused {
+			animation-play-state: paused;
+		}
+
+		@keyframes backgroundScroll {
+			from { background-position: center 0; }
+			to { background-position: center 1200px; }
+		}
+
+		#rocket {
+			font-size: 35px;
+			position: absolute;
+			bottom: 0;
+			left: 49%;
+			transform: translateX(-50%) rotate(-45deg);
+			transition: bottom 0.1s linear;
+			z-index: 2;
+		}
+
+		#stars {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			overflow: hidden;
+		}
+
+		.star {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			background-color: white;
+			animation: starFall 10s linear infinite;
+			z-index: 1;
+		}
+
+		@keyframes starFall {
+			0% { top: -10px; }
+			100% { top: 200%; }
+		}
+
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap');
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		.rocketcontainer {
+			width: 100%;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 120px;
+			background: #27282c;
+		}
+
+		.rocketbutton-container {
+			display: flex;
+			width: 100%;
+			justify-content: space-around;
+		}
+
+		.RocketGameButton {
+			flex-grow: 1;
+			margin: 5px;
+			padding: 16px 30px;
+			font-size: 1.5rem;
+			color: var(--color);
+			border: 2px solid rgba(0, 0, 0, 0.5);
+			border-radius: 4px;
+			text-shadow: 0 0 15px var(--color);
+			text-decoration: none;
+			text-transform: uppercase;
+			letter-spacing: 0.1rem;
+			transition: 0.5s;
+			z-index: 1;
+			position: relative; /* Ensure the pseudo-elements are positioned relative to the button */
+			overflow: hidden; /* Prevents pseudo-elements from affecting outside the button */
+		}
+
+		.RocketGameButton:hover {
+			color: #fff;
+			border: 2px solid rgba(0, 0, 0, 0);
+			box-shadow: 0 0 0px var(--color);
+		}
+
+		.RocketGameButton::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(--color);
+			z-index: -1;
+			transform: scale(0);
+			transition: 0.5s;
+		}
+
+		.RocketGameButton:hover::before {
+			transform: scale(1);
+			transition-delay: 0.1s;
+		}
+
+		.RocketBetDisplayButton {
+			flex-grow: 1;
+			width: 200px;
+			font-size: 12px;
+			color: #fff;
+			padding: 10px 5px;
+			text-shadow: 0 0 15px var(--color);
+			text-decoration: none;
+			text-transform: uppercase;
+			letter-spacing: 0.1rem;
+			transition: 0.5s;
+			z-index: 1;
+			position: relative; /* Ensure the pseudo-elements are positioned relative to the button */
+			overflow: hidden; /* Prevents pseudo-elements from affecting outside the button */
+		}
+
+
+
+		.rocketglow {
+		  font-size: 50px;
+		  font-family: 'Brush Script MT', cursive;
+		  color: #fff;
+		  text-align: center;
+		  animation: glow 1s ease-in-out infinite alternate;
+		}
+
+		@-webkit-keyframes glow {
+		  from {
+			text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+		  }
+		  
+		  to {
+			text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+		  }
+		}																						
+		/* Flash effect style */
+		.rocketflash-effect {
+			color: #fff;
+			border: 2px solid rgba(0, 0, 0, 0);
+			box-shadow: 0 0 0px var(--color);
+		}
+
+		.rocketfunds-buttons-container {
+			display: flex; /* Enables Flexbox */
+			align-items: center; /* Vertically aligns items in the center */
+			justify-content: center; /* Horizontally aligns items in the center */
+		}
+		.rocket-balance-display {
+			background-color: #ffffff;
+			border: 1px solid black;
+			padding: 4px 8px;
+			border-radius: 4px;
+			text-align: center;
+		}	
+
+		input[type="number"] {
+			font-size: 16px;
+			text-align:center;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+			width: 100%;
+			max-width: 100px; /* Optional: limit the max width */
+			margin: 5px 0;
+		}
+
+
+
+
+			
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="controlPanel">
+			<h2  class="rocketglow">To The Moon</h2>
+			<div class="rocketfunds-buttons-container">
+				<button id="addFundsButton" class="rocket-balance-display">&#10133</button>
+				<div class="RocketBetDisplayButton">Credit: $<span id="balance"></span></div>
+				<button id="withdrawFundsButton" class="rocket-balance-display">&#10134</button>
+			</div>
+            <div class="input" >
+                <div class="RocketBetDisplayButton">Current Bet</div>       
+				<input type="number" id="betAmount" value="10">
+            </div>
+	
+            <div id="rocketWrapper">
+                <div id="rocketContainer">
+                    <div id="stars"></div>
+                    <div id="rocket">🚀</div>
+                </div>
+            </div>
+				<div class="rocketbutton-container">
+					<button class="RocketGameButton" style="--color: #6eff3e;" id="startButton">Send</button>
+					<button class="RocketGameButton" style="--color: #ff1867;" id="bailButton" disabled>Bail</button>
+				</div>
+				<button class="RocketGameButton" href="#" style="--color:#1e9bff;" id="infoButton">
+					<div id="winningDisplay" style="color: black; font-size: 10px; margin-top: 0px;"></div>
+					<div id="resultDisplay" style="color: black; font-size: 10px; margin-top: 0px;"></div>
+				</button>
+        </div>
+    </div>
+    <script>
+    // Initialize variables to manage game state
+    let isGameRunning = false, multiplier = 1.0, gameInterval, starGenerationInterval,  hasBailed = false, hasExploded = false, flashInterval;
+    let balance = 0;        
+    // Get references to HTML elements
+    const rocketElement = document.getElementById('rocket');
+    const betAmountElement = document.getElementById('betAmount');
+    const startButton = document.getElementById('startButton');
+    const bailButton = document.getElementById('bailButton');
+    const rocketContainer = document.getElementById('rocketContainer');
+    const starsContainer = document.getElementById('stars');
+
+    // Add event listeners to buttons
+    startButton.addEventListener('click', startGame);
+    bailButton.addEventListener('click', bail);
+
+
+
+
+
+	 // Function to start the game
+	 
+	function startGame() {
+		// Check if the bet amount is more than the balance
+		let betAmount = parseFloat(betAmountElement.value);
+		if (betAmount > balance) {
+			// If the bet is too high, do nothing and exit the function
+			return;
+		}
+
+		if (isGameRunning) return;
+		isGameRunning = true;
+		hasBailed = false;
+		hasExploded = false;
+		multiplier = 1.0;
+		rocketElement.style.bottom = '0px';
+		rocketElement.textContent = '🚀';
+
+		// Deduct bet amount from balance
+		balance -= betAmount;
+
+		// Update balance display
+		updateBalanceDisplay();
+
+		// Reset button texts and states
+		startButton.textContent = 'x' + multiplier.toFixed(2);
+		startButton.disabled = true;
+		bailButton.disabled = false;
+		bailButton.textContent = 'Bail';
+
+		rocketContainer.classList.add('backgroundScroll');
+		gameInterval = setInterval(increaseMultiplier, 100);
+
+		// Resume star animations if they were paused
+		document.querySelectorAll('.star').forEach(star => {
+			star.style.animationPlayState = 'running';
+		});
+
+		// Set an interval to continuously generate stars
+		starGenerationInterval = setInterval(createStar, 200);
+
+		// Clear the flashing interval
+		clearInterval(flashInterval);
+	}
+
+
+	document.addEventListener('DOMContentLoaded', function() {
+		const winnings = getRandomValue(10, 500); // Random winnings
+		const multiplier = getRandomValue(1, 3, 2); // Random multiplier
+
+		document.getElementById('winningDisplay').textContent = 'Won: $' + winnings + ' (x' + multiplier + ')';
+		document.getElementById('resultDisplay').textContent = 'Distance: x' + getRandomValue(1, 3, 2);
+	});
+
+
+
+
+    // Function to create falling stars
+    function createStar() {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const x = Math.random() * rocketContainer.offsetWidth;
+        star.style.left = x + 'px';
+        star.style.top = '-5px'; // Start just above the visible area
+        rocketContainer.appendChild(star);
+
+        // Remove the star after 12 seconds
+        setTimeout(() => {
+            rocketContainer.removeChild(star);
+        }, 12000);
+    }
+
+    // Function to increase the game multiplier
+    function increaseMultiplier() {
+        multiplier += 0.01;
+        let newBottom = parseInt(rocketElement.style.bottom, 10) + 1;
+        if (newBottom < rocketContainer.clientHeight - rocketElement.clientHeight) {
+            rocketElement.style.bottom = newBottom + 'px';
+        }
+
+        // Update the multiplier value in the "Place Wager" button
+        startButton.textContent = 'x' + multiplier.toFixed(2);
+
+		// Probability calculator
+		let randomValue = Math.random();
+		if (randomValue < 0.01) {         // 1% chance for instant loss
+			instantLossVersion();
+		} else if (randomValue < 0.11) {  // 10% chance for low risk version
+			lowRiskVersion();
+		} else {
+			standardOddsVersion();         // 89% chance for standard odds
+		}
+    }
+
+
+	//Version Probability
+	function instantLossVersion() {
+		// Immediate explosion
+		explode();
+	}
+
+	function standardOddsVersion() {
+		// Standard explosion chance
+		if (Math.random() < 0.00005) {
+			explode();
+		}
+	}
+
+	function lowRiskVersion() {
+		// Lower chance of explosion
+		if (Math.random() < 0.00002) {
+			explode();
+		}
+	}
+
+
+
+
+
+
+    // Function to bail out and display winnings
+	function bail() {
+		if (!isGameRunning || hasBailed) return;
+
+		// Calculate winnings
+		let winnings = parseFloat(betAmountElement.value) * multiplier;
+
+		// Add winnings to balance
+		balance += winnings;
+
+		// Update balance display
+		updateBalanceDisplay();
+
+		// Update winning result display
+		let winningDisplay = document.getElementById('winningDisplay');
+		winningDisplay.textContent = 'Won: $' + winnings.toFixed(2) + ' (x' + multiplier.toFixed(2) + ')';
+
+		// Add flash effect
+		winningDisplay.classList.add('rocketflash-effect');
+
+		// Remove flash effect after 1 second
+		setTimeout(function() {
+			winningDisplay.classList.remove('rocketflash-effect');
+		});
+	}
+
+
+    // Function to simulate the rocket exploding
+	// Function to simulate the rocket exploding
+	function explode() {
+		rocketElement.textContent = '💥';
+		rocketContainer.classList.remove('backgroundScroll');
+		rocketContainer.classList.add('backgroundPaused');
+		hasExploded = true; // Mark the rocket as exploded
+		updateBalanceDisplay();
+		endGame();
+
+		// Pause all stars
+		document.querySelectorAll('.star').forEach(star => {
+			star.style.animationPlayState = 'paused';
+		});
+
+		// Set the text of the start button to "Launch"
+		startButton.textContent = 'Send';
+	}
+
+	// Function to end the game
+	function endGame() {
+		clearInterval(gameInterval);
+		clearInterval(starGenerationInterval);
+		isGameRunning = false;
+
+		// Update the result display with the final multiplier
+		let resultDisplay = document.getElementById('resultDisplay');
+		resultDisplay.textContent = 'Distance: x' + multiplier.toFixed(2);
+
+		startButton.textContent = 'Launch';
+		startButton.disabled = false;
+	}
+
+	function getRandomValue(min, max, precision = 2) {
+		return (Math.random() * (max - min) + min).toFixed(precision);
+	}
+
+	document.getElementById('addFundsButton').addEventListener('click', function() {
+		let amountToAdd = parseInt(prompt("Enter the amount to add:"));
+		if (!isNaN(amountToAdd) && amountToAdd > 0) {
+			balance += amountToAdd;
+			updateBalanceDisplay();
+		} else {
+			alert("Invalid amount entered!");
+		}
+	});
+
+	document.getElementById('withdrawFundsButton').addEventListener('click', function() {
+		let amountToWithdraw = parseInt(prompt("Enter the amount to withdraw:"));
+		if (!isNaN(amountToWithdraw) && amountToWithdraw > 0) {
+			if (amountToWithdraw <= balance) {
+				balance -= amountToWithdraw;
+				updateBalanceDisplay();
+			} else {
+				alert("Insufficient funds to withdraw that amount!");
+			}
+		} else {
+			alert("Invalid amount entered!");
+		}
+	});
+	
+	function updateBalanceDisplay() {
+		console.log("Before formatting:", balance, typeof balance);
+
+		let formattedBalance = parseFloat(balance).toFixed(2);
+		console.log("After formatting:", formattedBalance, typeof formattedBalance);
+
+		document.getElementById('balance').textContent = formattedBalance.toLocaleString();
+	}
+
+	window.onload = updateBalanceDisplay;
+	
+	
+</script>
+
+
+</body>
+</html>
