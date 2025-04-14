@@ -107,8 +107,8 @@ button.gsc-search-button {
 .master-ticker {
     position: fixed;
     top: 0;
-    left: 200px;
-    right: 200px;
+    left: 100px;
+    right: 100px;
     height: 40px;
     background: #1c2833;
     color: #ecf0f1;
@@ -162,12 +162,19 @@ button.gsc-search-button {
     to { transform: translateX(-100%); }
 }
 
+
+
+
+
+
+
+
 /* Left and Right Menu Styling */
 .left-menu, .right-menu {
     position: fixed;
     top: 0;
     height: 100%;
-    width: 200px;
+    width: 150px;
     background: #1c2833;
     padding-top: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
@@ -191,7 +198,7 @@ button.gsc-search-button {
 .left-menu ul li a, .right-menu ul li a {
     text-decoration: none;
     color: #ecf0f1;
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: block;
     padding: 10px 20px;
     transition: background-color 0.3s, color 0.3s;
@@ -209,22 +216,44 @@ header, main, footer {
     margin-right: 220px;
 }
 
+.left-menu,
+.right-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+
+/* iframe controls for all pages BUT Reddit */
+
 /* iframe grid adjustments */
 .iframe-grid {
     display: flex;
-    gap: 15px;
+    gap: 5px;
+	row-gap: 5px;
     justify-content: center;
-    flex-wrap: nowrap;
-    margin-top: 60px; /* Adjust this smaller value as needed */
+    margin-top: 60px;
     max-width: 100%;
 }
-
 
 .iframe-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 720px;
+    width: 450px;
+	height: 600px;
 }
 
 .iframe-container iframe {
@@ -234,6 +263,23 @@ header, main, footer {
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Search Container (SteamRip Box) */
 .search-container {
@@ -271,7 +317,11 @@ button:hover {
     background-color: #16a085;
 }
 
-#reset-steamrip, #refresh-models {
+
+
+
+
+#reset-steamrip {
     background-color: limegreen;
     border-radius: 50%;  /* Ensures a perfect circle */
     width: 10px;         /* Slightly larger for better visibility */
@@ -289,13 +339,20 @@ button:hover {
     margin-right: 15px; /* Increase as needed to create desired spacing */
 }
 
+
+
+
+
 /* Footer Styling */
 footer {
     margin-top: 20px;
     padding-bottom: 20px;
-    width: 100%;
+    width: calc(100% - 440px); /* matches sidebar width */
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
+
 
 footer p {
     text-align: center;
@@ -308,7 +365,7 @@ footer p {
 #ip-address-container {
     margin-top: 20px;
     color: limegreen;
-    font-size: 1.2rem;
+    font-size: .75rem;
 }
 
 /* Utility Classes */
@@ -346,13 +403,130 @@ footer p {
 
 
 
-#section4 .iframe-container {
-    width: 600px; 
+
+/* Sidebar toggle button */
+.center-toggle {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;
+    background: #1c2833;
+    color: limegreen;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#section4 .iframe-container iframe {
-    height: 700px; 
+.center-toggle:hover {
+    background: #2ecc71;
+    color: black;
+    transform: translateX(-50%) scale(1.05);
 }
+
+body.hide-left .left-menu {
+    transform: translateX(-220px);
+}
+
+body.hide-right .right-menu {
+    transform: translateX(220px);
+}
+
+.left-menu,
+.right-menu {
+    transition: transform 0.3s ease;
+}
+
+.center-toggle.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+
+
+
+/* Reddit-specific layout (2 rows of 3, clean and isolated) */
+.reddit-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px 10px;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+
+.reddit-frame {
+    flex: 0 1 calc(33.333% - 20px); /* 3 across */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.reddit-frame iframe {
+    width: 400px;
+    height: 400px;
+    border: none;
+    border-radius: 5px;
+    background: #1c2833;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+.refresh-models-btn {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.refresh-models-btn button {
+    background-color: limegreen;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+.refresh-models-btn button:hover {
+    background-color: #16a085;
+}
+
+
+
+
+#section5-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0px;
+}
+
+#section5 {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+
+
+
+
+
+
 
 
 
@@ -564,21 +738,18 @@ let isGamingTickerLoaded = false;
 let isOSRSTickerLoaded = false;
 
 async function showSection(sectionId) {
-    const sections = document.querySelectorAll('main > div');
+    const sections = document.querySelectorAll('main > div, #section5-wrapper');
     sections.forEach(section => {
-        section.style.display = (section.id === sectionId) ? 'flex' : 'none';
+        section.style.display = 'none';
     });
 
     const gamingFooter = document.getElementById('gaming-footer');
-    const iframeGrids = document.querySelectorAll('.iframe-grid');
-
     const gamingTicker = document.getElementById('gaming-ticker');
     const osrsTicker = document.getElementById('osrs-ticker');
 
     if (sectionId === 'gaming-section') {
+        document.getElementById('gaming-section').style.display = 'flex';
         gamingFooter.style.display = 'flex';
-        iframeGrids.forEach(grid => grid.style.marginTop = '100px');
-
         gamingTicker.classList.add('active');
         osrsTicker.classList.remove('active');
 
@@ -586,11 +757,9 @@ async function showSection(sectionId) {
             await loadGamingTicker();
             isGamingTickerLoaded = true;
         }
-
     } else if (sectionId === 'utility-section') {
+        document.getElementById('utility-section').style.display = 'flex';
         gamingFooter.style.display = 'none';
-        iframeGrids.forEach(grid => grid.style.marginTop = '50px');
-
         gamingTicker.classList.remove('active');
         osrsTicker.classList.add('active');
 
@@ -598,15 +767,19 @@ async function showSection(sectionId) {
             await loadOSRSTicker();
             isOSRSTickerLoaded = true;
         }
-
-    } else {
+    } else if (sectionId === 'section5') {
+        document.getElementById('section5-wrapper').style.display = 'flex';
         gamingFooter.style.display = 'none';
-        iframeGrids.forEach(grid => grid.style.marginTop = '50px');
-
+        gamingTicker.classList.remove('active');
+        osrsTicker.classList.remove('active');
+    } else {
+        document.getElementById(sectionId).style.display = 'flex';
+        gamingFooter.style.display = 'none';
         gamingTicker.classList.remove('active');
         osrsTicker.classList.remove('active');
     }
 }
+
 
 
 
@@ -694,9 +867,28 @@ document.head.appendChild(style);
 
 
 // Your global initialization
-window.onload = async () => {
+window.addEventListener('load', async () => {
+    // 1. Initialize toggle button idle hiding
+    const toggleBtn = document.getElementById('centerToggleBtn');
+    let idleTimeout;
+
+    function resetIdleTimer() {
+        toggleBtn.classList.remove('hidden');
+        clearTimeout(idleTimeout);
+        idleTimeout = setTimeout(() => {
+            toggleBtn.classList.add('hidden');
+        }, 4000); // 4 seconds
+    }
+
+    ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, resetIdleTimer);
+    });
+
+    resetIdleTimer(); // start tracking
+
+    // 2. Run original startup logic
     await fetchIPAddress();
-    await showSection('gaming-section'); // This auto-loads the gaming ticker
+    await showSection('gaming-section');
     refreshAllRedditFrames();
 
     setInterval(async () => {
@@ -705,11 +897,11 @@ window.onload = async () => {
 
         if (activeGaming) await loadGamingTicker();
         if (activeOSRS) await loadOSRSTicker();
+    }, 300000); // every 5 mins
 
-    }, 300000);  // refresh every 5 minutes
+    setInterval(refreshAllRedditFrames, 60000); // Reddit every 60s
+});
 
-    setInterval(refreshAllRedditFrames, 60000); // Reddit frames refresh every 1 minute
-};
 
 
 
@@ -721,102 +913,98 @@ window.onload = async () => {
 
 
 // Reddit Muli Pulling //
+// --- Enhanced Reddit Frame Media Fetch ---
 const recentPosts = {
     'snsfw': [],
     'nsfw': []
 };
-const MAX_HISTORY = 30;  // slightly increased to improve randomness
+const MAX_HISTORY = 150;  // Increased to reduce chance of repeats
+const currentCycleUsed = new Set();  // Tracks this refresh cycle
 
 async function fetchRandomRedditMedia(frameId, multiName) {
-	const endpoint = `https://www.reddit.com/user/boocheck/m/${multiName}.json?limit=100`;
-
+    const endpoint = `https://www.reddit.com/user/boocheck/m/${multiName}.json?limit=100`;
 
     try {
         const response = await fetch(endpoint);
         const json = await response.json();
         const posts = json.data.children;
 
-        const mediaPosts = posts.filter(post =>
-            post.data.post_hint === 'image' ||
-            (post.data.url && post.data.url.match(/\.(jpg|jpeg|png|gif)$/))
-        );
+        // Filter to usable, non-repetitive media posts
+        let mediaPosts = posts.filter(post => {
+            const url = post.data.url;
+            return (
+                (post.data.post_hint === 'image' || /\.(jpg|jpeg|png|gif)$/i.test(url)) &&
+                !url.includes('preview.redd.it') &&
+                post.data.score > 10 &&
+                !recentPosts[multiName].includes(url) &&
+                !currentCycleUsed.has(url)
+            );
+        });
+
+        // Reset history if all are recently used
+        if (mediaPosts.length === 0) {
+            recentPosts[multiName] = [];
+            mediaPosts = posts.filter(post => {
+                const url = post.data.url;
+                return (
+                    (post.data.post_hint === 'image' || /\.(jpg|jpeg|png|gif)$/i.test(url)) &&
+                    !url.includes('preview.redd.it') &&
+                    post.data.score > 10 &&
+                    !currentCycleUsed.has(url)
+                );
+            });
+        }
 
         if (mediaPosts.length === 0) {
-            console.warn('No suitable media posts found in', multiName);
+            console.warn('No suitable unique media posts found for', multiName);
             return;
         }
 
-        let filteredPosts = mediaPosts.filter(post => !recentPosts[multiName].includes(post.data.url));
-
-        // If all posts have been shown recently, reset the history
-        if (filteredPosts.length === 0) {
-            recentPosts[multiName] = [];
-            filteredPosts = mediaPosts;
-        }
-
-        // Shuffle the filtered posts for added randomness
-        shuffleArray(filteredPosts);
-
-        const selectedPost = filteredPosts[0];
+        // Shuffle and pick randomly from top 10 options
+        shuffleArray(mediaPosts);
+        const selectionPool = mediaPosts.slice(0, 10);
+        const selectedPost = selectionPool[Math.floor(Math.random() * selectionPool.length)];
         const mediaUrl = selectedPost.data.url;
 
+        // Track URL in memory
         recentPosts[multiName].push(mediaUrl);
         if (recentPosts[multiName].length > MAX_HISTORY) {
             recentPosts[multiName].shift();
         }
+        currentCycleUsed.add(mediaUrl);
 
+        // Push media to iframe
         const iframe = document.getElementById(frameId);
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
         const img = iframeDoc.querySelector('img');
-        img.src = mediaUrl;
+        if (img) {
+            img.src = mediaUrl;
+        }
 
     } catch (error) {
         console.error('Error fetching from Reddit:', error);
     }
 }
 
-// Fisher-Yates Shuffle for better randomization
-function shuffleArray(array) {
-    let currentIndex = array.length, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-    }
-
-    return array;
-}
 
 
 
 // Refresh all frames with correct multis
 function refreshAllRedditFrames() {
-	// snsFW multi (top row)
-	fetchRandomRedditMedia('reddit-frame-1', 'snsfw');
-	fetchRandomRedditMedia('reddit-frame-2', 'snsfw');
-	fetchRandomRedditMedia('reddit-frame-3', 'snsfw');
+    currentCycleUsed.clear();  // Clear tracker at start of refresh
 
-	// nsFW multi (bottom row)
-	fetchRandomRedditMedia('reddit-frame-4', 'nsfw');
-	fetchRandomRedditMedia('reddit-frame-5', 'nsfw');
-	fetchRandomRedditMedia('reddit-frame-6', 'nsfw');
+    fetchRandomRedditMedia('reddit-frame-1', 'snsfw');
+    fetchRandomRedditMedia('reddit-frame-2', 'snsfw');
+    fetchRandomRedditMedia('reddit-frame-3', 'snsfw');
+
+    fetchRandomRedditMedia('reddit-frame-4', 'nsfw');
+    fetchRandomRedditMedia('reddit-frame-5', 'nsfw');
+    fetchRandomRedditMedia('reddit-frame-6', 'nsfw');
 }
 
-// Initial load and refresh every 3 minutes	
-refreshAllRedditFrames();
-setInterval(refreshAllRedditFrames, 60000);
+
 
 //Reddit Multi Pulling End//
-
-
-
-
-
-
-
 function sailTheSeasSearch(event) {
     event.preventDefault();
     const query = document.getElementById('sts-search').value;
@@ -825,6 +1013,62 @@ function sailTheSeasSearch(event) {
 }
 
 
+
+
+
+
+
+//Left and Right Menu Slide Buttons//
+function toggleAllMenus() {
+    const body = document.body;
+    const btn = document.getElementById('centerToggleBtn');
+
+    const menusWereVisible = !body.classList.contains('hide-left') && !body.classList.contains('hide-right');
+
+    body.classList.toggle('hide-left');
+    body.classList.toggle('hide-right');
+
+    btn.innerText = menusWereVisible ? '> <' : '< >';
+}
+
+let idleTimeout;
+const toggleBtn = document.getElementById('centerToggleBtn');
+
+// Track activity to show/hide the toggle button
+function resetIdleTimer() {
+    toggleBtn.classList.remove('hidden');
+
+    clearTimeout(idleTimeout);
+    idleTimeout = setTimeout(() => {
+        toggleBtn.classList.add('hidden');
+    }, 4000); // 4 seconds idle = hide
+}
+
+// Attach listeners to show button on interaction
+['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+    document.addEventListener(event, resetIdleTimer);
+});
+
+window.addEventListener('load', resetIdleTimer);
+
+
+
+function refreshModels() {
+    const modelFrames = [
+        'model-frame-1',
+        'model-frame-2',
+        'model-frame-3'
+    ];
+
+    modelFrames.forEach(id => {
+        const iframe = document.getElementById(id);
+        if (iframe) {
+            const src = iframe.src;
+            iframe.src = '';            // force reload
+            iframe.src = src;           // restore original URL
+        }
+    });
+}
 
 
 
@@ -849,52 +1093,60 @@ function sailTheSeasSearch(event) {
 	
 <!-- Left Menu -->
 <div class="left-menu">
-    <ul>
-        <li><h2 style="font-weight: bold; text-decoration: underline; padding: 5px;">Pages</h2></li>
-        <li><a href="#gaming" onclick="showSection('gaming-section')">Gaming</a></li>
-        <li><a href="#utility" onclick="showSection('utility-section')">OSRS</a></li>
-        <li><a href="#section4" onclick="showSection('section4')">Reddits</a></li>
-        <li><a href="#section5" onclick="showSection('section5')">Section 5</a></li>
-        <li><a href="#section6" onclick="showSection('section6')">Section 6</a></li>
-    </ul>
+    <div class="menu-body">
+        <ul>
+            <li><h2 style="font-weight: bold; text-decoration: underline; padding: 5px;">Pages</h2></li>
+            <li><a href="#gaming" onclick="showSection('gaming-section')">Gaming</a></li>
+            <li><a href="#utility" onclick="showSection('utility-section')">OSRS</a></li>
+            <li><a href="#section4" onclick="showSection('section4')">Reddits</a></li>
+            <li><a href="#section5" onclick="showSection('section5')">Elite</a></li>
+            <li><a href="#section6" onclick="showSection('section6')">Section 6</a></li>
+        </ul>
+    </div>
 </div>
+
 
 	
 	
 <!-- Right Menu -->
 <div class="right-menu">
+    <!-- IP Address Display -->
     <div id="ip-address-container" style="text-align: center; color: limegreen; padding: 10px;">
         <span id="ip-address"></span>
     </div>
 
-    <ul>
-        <li><h2 style="font-weight: bold; text-decoration: underline; padding: 5px;">Reddit</h2></li>
-        <li><a href="https://www.reddit.com/r/Piracy/wiki/megathread" target="_blank" style="color: gold; font-weight: bold;">Megathread</a></li>
+    <!-- Scrollable Menu Content -->
+    <div class="menu-body">
+        <ul>
+            <li><h2 style="font-weight: bold; text-decoration: underline; padding: 5px;">Reddit</h2></li>
+            <li><a href="https://www.reddit.com/r/Piracy/wiki/megathread" target="_blank" style="color: gold; font-weight: bold;">Megathread</a></li>
 
-        <li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Computer</h2></li>
-        <li><a href="https://www.cg-gamespc.com/" target="_blank">CG Games PC</a></li>
-        <li><a href="https://atopgames.com/" target="_blank">Atop Games</a></li>
-        <li><a href="https://abandonwaregames.net/" target="_blank">Abandonware Games</a></li>
-        <li><a href="https://gamepcfull.com/" target="_blank">Game PC Full</a></li>
-        <li><a href="https://getfreegames.net/" target="_blank">Get Free Games</a></li>
-        <li><a href="https://www.gamespack.net/" target="_blank">Games Pack</a></li>
-        <li><a href="https://www.gamezdl.cc/" target="_blank">GamezDL</a></li>
-        <li><a href="https://www.gog-games.to/" target="_blank">GOG Games</a></li>
-        <li><a href="https://www.ankergames.net/" target="_blank">Anker Games</a></li>
-        <li><a href="https://fitgirl-repacks.site/" target="_blank">FitGirl Repacks</a></li>
+            <li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Computer</h2></li>
+            <li><a href="https://www.cg-gamespc.com/" target="_blank">CG Games PC</a></li>
+            <li><a href="https://atopgames.com/" target="_blank">Atop Games</a></li>
+            <li><a href="https://abandonwaregames.net/" target="_blank">Abandonware Games</a></li>
+            <li><a href="https://gamepcfull.com/" target="_blank">Game PC Full</a></li>
+            <li><a href="https://getfreegames.net/" target="_blank">Get Free Games</a></li>
+            <li><a href="https://www.gamespack.net/" target="_blank">Games Pack</a></li>
+            <li><a href="https://www.gamezdl.cc/" target="_blank">GamezDL</a></li>
+            <li><a href="https://www.gog-games.to/" target="_blank">GOG Games</a></li>
+            <li><a href="https://www.ankergames.net/" target="_blank">Anker Games</a></li>
+            <li><a href="https://fitgirl-repacks.site/" target="_blank">FitGirl Repacks</a></li>
 
-        <li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Android</h2></li>
-        <li><a href="https://apkmody.com/" target="_blank">APKMODY</a></li>
-        <li><a href="https://modyolo.com/" target="_blank">Modyolo</a></li>
+            <li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Android</h2></li>
+            <li><a href="https://apkmody.com/" target="_blank">APKMODY</a></li>
+            <li><a href="https://modyolo.com/" target="_blank">Modyolo</a></li>
 
-        <li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Streaming</h2></li>
-        <li><a href="https://www.cineby.app/" target="_blank">Cineby</a></li>    
-        <li><a href="https://broflix.cc/" target="_blank">BROFLIX</a></li>    
-        <li><a href="https://freek.to/" target="_blank">FREEK</a></li>    
-    </ul>
+            <li><h2 style="font-weight: bold; text-decoration: underline; padding: 1px;">Streaming</h2></li>
+            <li><a href="https://www.cineby.app/" target="_blank">Cineby</a></li>    
+            <li><a href="https://broflix.cc/" target="_blank">BROFLIX</a></li>    
+            <li><a href="https://freek.to/" target="_blank">FREEK</a></li>
+        </ul>
+    </div>
 </div>
 
-	
+
+
 	
 
 	
@@ -941,71 +1193,45 @@ function sailTheSeasSearch(event) {
 		
 			
 			
-			
-	<!-- Section 4 (Reddit Multis & Models combined) -->
-	<div id="section4" class="iframe-grid" style="display: none; flex-wrap: wrap; justify-content: center;">
+					
 
-		<!-- Reddit Top Row -->
-		<div class="iframe-container">
-			<iframe id="reddit-frame-1" srcdoc="<html><head><style>html,body{margin:0;padding:0;background:#1c2833;display:flex;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden;}img{max-width:100%;max-height:100%;border-radius:5px;}</style></head><body><img/></body></html>" title="snsfw Frame 1"></iframe>
-		</div>
-
-		<div class="iframe-container">
-			<iframe id="reddit-frame-2" srcdoc="<html><head><style>html,body{margin:0;padding:0;background:#1c2833;display:flex;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden;}img{max-width:100%;max-height:100%;border-radius:5px;}</style></head><body><img/></body></html>" title="snsfw Frame 2"></iframe>
-		</div>
-
-		<!-- Model Iframe 1 replacing reddit-frame-3 -->
-		<div class="iframe-container">
-			<iframe id="model-frame-1" src="https://www.elitebabes.com/random/?sort=gallery" title="ModelGallery1"></iframe>
-		</div>
-
-		<!-- Reddit Bottom Row -->
-		<div class="iframe-container">
-			<iframe id="reddit-frame-4" srcdoc="<html><head><style>html,body{margin:0;padding:0;background:#1c2833;display:flex;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden;}img{max-width:100%;max-height:100%;border-radius:5px;}</style></head><body><img/></body></html>" title="nsfw Frame 1"></iframe>
-		</div>
-
-		<div class="iframe-container">
-			<iframe id="reddit-frame-5" srcdoc="<html><head><style>html,body{margin:0;padding:0;background:#1c2833;display:flex;justify-content:center;align-items:center;height:100%;width:100%;overflow:hidden;}img{max-width:100%;max-height:100%;border-radius:5px;}</style></head><body><img/></body></html>" title="nsfw Frame 2"></iframe>
-		</div>
-
-		<!-- Model Iframe 2 replacing reddit-frame-6 -->
-		<div class="iframe-container">
-			<iframe id="model-frame-2" src="https://www.elitebabes.com/random/?sort=gallery" title="ModelGallery2"></iframe>
-		</div>
-
-	</div>
+<!-- Section 4 (Reddit Multis - standalone layout) -->
+<div id="section4" class="reddit-grid" style="display: none;">
+    <div class="reddit-frame"><iframe id="reddit-frame-1" src="about:blank" title="Reddit Frame 1"></iframe></div>
+    <div class="reddit-frame"><iframe id="reddit-frame-2" src="about:blank" title="Reddit Frame 2"></iframe></div>
+    <div class="reddit-frame"><iframe id="reddit-frame-3" src="about:blank" title="Reddit Frame 3"></iframe></div>
+    <div class="reddit-frame"><iframe id="reddit-frame-4" src="about:blank" title="Reddit Frame 4"></iframe></div>
+    <div class="reddit-frame"><iframe id="reddit-frame-5" src="about:blank" title="Reddit Frame 5"></iframe></div>
+    <div class="reddit-frame"><iframe id="reddit-frame-6" src="about:blank" title="Reddit Frame 6"></iframe></div>
+</div>
 
 
 
 
-		<!-- Section 5 -->
-		<div id="section5" class="iframe-grid" style="display: none;">
-			<div class="iframe-container">
-				<iframe src="about:blank" title="Section 5 - Frame 1"></iframe>
-			</div>
-			<div class="iframe-container">
-				<iframe src="about:blank" title="Section 5 - Frame 2"></iframe>
-			</div>
-			<div class="iframe-container">
-				<iframe src="about:blank" title="Section 5 - Frame 3"></iframe>
-			</div>
-		</div>
 
 
-		<!-- Section 6 -->
-		<div id="section6" class="iframe-grid" style="display: none;">
-			<div class="iframe-container">
-				<iframe src="about:blank" title="Section 6 - Frame 1"></iframe>
-			</div>
-			<div class="iframe-container">
-				<iframe src="about:blank" title="Section 6 - Frame 2"></iframe>
-			</div>
-			<div class="iframe-container">
-				<iframe src="about:blank" title="Section 6 - Frame 3"></iframe>
-			</div>
-		</div>
-		
-    </main>
+
+<!-- Section 5 (Elite Models) -->
+<div id="section5-wrapper" style="display: none;">
+  <div id="section5" class="iframe-grid">
+    <div class="iframe-container">
+      <iframe id="model-frame-1" src="https://www.elitebabes.com/random/?sort=gallery" title="ModelGallery1"></iframe>
+    </div>
+    <div class="iframe-container">
+      <iframe id="model-frame-2" src="https://www.elitebabes.com/random/?sort=gallery" title="ModelGallery2"></iframe>
+    </div>
+    <div class="iframe-container">
+      <iframe id="model-frame-3" src="https://www.elitebabes.com/random/?sort=gallery" title="ModelGallery3"></iframe>
+    </div>
+  </div>
+
+  <div class="refresh-models-btn">
+    <button onclick="refreshModels()"></button>
+  </div>
+</div>
+
+
+
 
 
 
@@ -1019,19 +1245,24 @@ function sailTheSeasSearch(event) {
         <div class="search-container" style="gap: 20px;">
             
             <!-- IGDB Search (left side) -->
-            <form id="footer-igdb-search-form" onsubmit="searchGame(event)" style="display: flex; align-items: center; gap: 10px;">
-                <input type="text" id="footer-igdb-search" placeholder="IGDB Search..." required
-                    style="padding: 10px; border-radius: 5px; border: none;">
-                <button type="submit" style="padding: 10px; background-color: limegreen; color: white; border-radius: 5px; cursor: pointer;">
-                    IGDB
-                </button>
-            </form>
-
+			<form id="footer-igdb-search-form" onsubmit="searchGame(event)" style="display: flex; align-items: center; gap: 10px;">
+				<button id="reset-steamrip" type="button" onclick="resetSteamRip()" title="Reset SteamRip"></button>
+				<input type="text" id="footer-igdb-search" placeholder="IGDB Search..." required
+					style="padding: 10px; border-radius: 5px; border: none;">
+				<button type="submit" style="padding: 10px; background-color: limegreen; color: white; border-radius: 5px; cursor: pointer;">
+					IGDB
+				</button>
+			</form>
             <!-- Google Custom Search (right side) -->
             <div class="gcse-search"></div>
 
         </div>
     </div>
 </footer>
+
+
+<button id="centerToggleBtn" class="center-toggle" onclick="toggleAllMenus()">&lt;&gt;</button>
+
+
 </body>
 </html>
