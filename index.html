@@ -20,6 +20,26 @@
       min-height: 100vh;
     }
 
+    /* Toggle Button (mobile) */
+    .center-toggle {
+      display: none;
+      position: fixed; bottom: 15px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3000;
+      background: #1c2833; color: limegreen;
+      border: none; border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 1.3rem; font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .center-toggle:hover {
+      background: #2ecc71;
+      color: black;
+      transform: translateX(-50%) scale(1.05);
+    }
+
     /* Header Styles */
     #gaming-header, header {
       position: fixed; top: 50px; left: 220px; right: 220px;
@@ -47,6 +67,7 @@
       background:#1c2833; padding-top:20px;
       box-shadow:2px 0 5px rgba(0,0,0,0.5);
       z-index:1000; overflow-y:auto;
+      transition: transform 0.3s ease;
     }
     .left-menu { left:0; }
     .right-menu { right:0; box-shadow:-2px 0 5px rgba(0,0,0,0.5); }
@@ -126,21 +147,12 @@
     }
     footer p { margin-top:20px; font-size:1rem; color:#95a5a6; }
 
-    /* Toggle Button */
-    .center-toggle {
-      position:fixed; bottom:15px; left:50%;
-      transform:translateX(-50%); z-index:3000;
-      background:#1c2833; color:limegreen; border:none;
-      border-radius:50px; padding:8px 18px;
-      font-size:1.3rem; font-weight:bold; cursor:pointer;
-      box-shadow:0 4px 12px rgba(0,0,0,0.5);
-      transition:background 0.3s,transform 0.2s;
-    }
-    .center-toggle:hover { background:#2ecc71; color:black; transform:translateX(-50%) scale(1.05); }
-    body.hide-left .left-menu { transform:translateX(-220px); }
-    body.hide-right .right-menu { transform:translateX(220px); }
-    .left-menu, .right-menu { transition:transform .3s; }
-    .center-toggle.hidden { opacity:0; pointer-events:none; transition:opacity .5s; }
+    /* Toggle side menus classes */
+    body.hide-left  .left-menu  { transform: translateX(-100%); }
+    body.hide-right .right-menu { transform: translateX(100%); }
+
+    /* Toggle button hidden by default on desktop */
+    body.hide-left, body.hide-right { /* no-op on desktop */ }
 
     /* Reddit Grid */
     .reddit-grid {
@@ -174,70 +186,99 @@
     #lightbox-overlay img {
       max-width:100%; max-height:100%;
       border-radius:5px; box-shadow:0 4px 15px rgba(0,0,0,0.7);
+      transition: transform .3s ease;
+      cursor: zoom-in;
     }
-	/* make the lightbox image zoomable */
-	#lightbox-overlay img {
-	  transition: transform .3s ease;
-	  cursor: zoom-in;
-	}
-	#lightbox-overlay.zoomed img {
-	  transform: scale(2);
-	  cursor: zoom-out;
-	}
-	
-
+    #lightbox-overlay.zoomed img {
+      transform: scale(2);
+      cursor: zoom-out;
+    }
 
     /* Flashing IP warning */
     @keyframes flash-red {
       0%,100% { color:red; }
       50%    { color:darkred; }
     }
+
+    /* Elite Models Section */
+    #section5-wrapper {
+      display: none; flex-direction: column; align-items:center;
+      gap:10px; margin-top:20px;
+    }
+    .model-iframe-container { display:flex; justify-content:center; gap:20px; }
+    .model-iframe {
+      width:600px; height:800px; border:none; border-radius:5px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.5);
+    }
+    .refresh-models-btn button {
+      background-color:limegreen; color:white; border:none;
+      border-radius:8px; padding:8px; font-size:1rem; cursor:pointer;
+      box-shadow:0 4px 10px rgba(0,0,0,0.5);
+    }
+    .refresh-models-btn button:hover { background-color:#16a085; }
+
+    /* —— Responsive Overrides —— */
+    @media (max-width: 768px) {
+      /* show toggle button */
+      .center-toggle { display: block; }
+
+      /* collapse margins */
+      header, main, footer {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      /* off‑canvas menus by default */
+      body.hide-left  .left-menu  { transform: translateX(0); }
+      body.hide-right .right-menu { transform: translateX(0); }
+      .left-menu  { transform: translateX(-100%); }
+      .right-menu { transform: translateX(100%); }
+
+      /* stack and fluid iframes */
+      .iframe-grid { flex-direction: column; padding: 10px; }
+      .iframe-container { width: 100%; }
+      .iframe-container iframe { width: 100%; height: auto; min-height: 200px; }
+
+      /* fluid game box */
+      #steamrip-box {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 300px;
+      }
+    }
 	
-	/* Elite Models Section */
-	#section5-wrapper {
-	  display: none;
-	  flex-direction: column;
-	  align-items: center;
-	  gap: 10px;
-	  margin-top: 20px;
+	
+	@media (max-width: 768px) {
+	  header, main, footer {
+		margin-left: 0;
+		margin-right: 0;
+	  }
+	  .iframe-grid, #section4.reddit-grid {
+		flex-direction: column;
+		align-items: stretch;
+	  }
+	  .iframe-container, #steamrip-box,
+	  #osrs-frame-container iframe,
+	  .model-iframe {
+		width: 100%;
+		height: auto;
+	  }
+	  #osrs-section {
+		flex-direction: column;
+		gap: 10px;
+	  }
+	  #osrs-table-container {
+		width: 100%;
+		height: auto;
+	  }
 	}
 
-	.model-iframe-container {
-	  display: flex;
-	  justify-content: center;
-	  gap: 20px;
-	}
-
-	.model-iframe {
-	  width: 600px;
-	  height: 800px;
-	  border: none;
-	  border-radius: 5px;
-	  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-	}
-
-	.refresh-models-btn button {
-	  background-color: limegreen;
-	  color: white;
-	  border: none;
-	  border-radius: 8px;
-	  padding: 8px 8px;
-	  font-size: 1rem;
-	  cursor: pointer;
-	  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-	}
-
-	.refresh-models-btn button:hover {
-	  background-color: #16a085;
-	}
-	
-	
-	
-	
-	
   </style>
 </head>
 <body>
+
+  <!-- Mobile toggle -->
+  <button class="center-toggle" onclick="toggleAllMenus()">☰</button>
 
   <!-- Left Menu -->
   <div class="left-menu">
@@ -346,29 +387,20 @@
     <!-- Lightbox -->
     <div id="lightbox-overlay"><img id="lightbox-img" src="" alt="Preview"></div>
 
-	  <!-- Section 5: Elite Models -->
-	  <div id="section5-wrapper" style="display:none; flex-direction:column; align-items:center; gap:10px; margin-top:20px;">
-		<div class="model-iframe-container">
-		  <iframe
-			id="model-frame-1"
-			class="model-iframe"
-			src="https://www.elitebabes.com/random/?sort=gallery"
-			title="ModelGallery1"
-			loading="lazy">
-		  </iframe>
-		  <iframe
-			id="model-frame-2"
-			class="model-iframe"
-			src="https://www.elitebabes.com/random/?sort=gallery"
-			title="ModelGallery2"
-			loading="lazy">
-		  </iframe>
-		</div>
-		<div class="refresh-models-btn">
-		  <button onclick="refreshModels()"></button>
-		</div>
-	  </div>
-
+    <!-- Section 5: Elite Models -->
+    <div id="section5-wrapper" style="display:none; flex-direction:column; align-items:center; gap:10px; margin-top:20px;">
+      <div class="model-iframe-container">
+        <iframe id="model-frame-1" class="model-iframe"
+                src="https://www.elitebabes.com/random/?sort=gallery"
+                title="ModelGallery1" loading="lazy"></iframe>
+        <iframe id="model-frame-2" class="model-iframe"
+                src="https://www.elitebabes.com/random/?sort=gallery"
+                title="ModelGallery2" loading="lazy"></iframe>
+      </div>
+      <div class="refresh-models-btn">
+        <button onclick="refreshModels()"></button>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -388,125 +420,148 @@
     </div>
   </footer>
 
-<script defer>
-  const overlay    = document.getElementById('lightbox-overlay');
-  const overlayImg = document.getElementById('lightbox-img');
-  let zoomLevel    = 1;
-
-  // close when clicking backdrop
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) {
-      zoomLevel = 1;
-      overlayImg.style.transform = `scale(${zoomLevel})`;
-      overlayImg.style.transformOrigin = 'center center';
-      overlay.classList.remove('zoomed');
-      overlay.style.display = 'none';
-      overlayImg.src = '';
-    }
-  });
-
-  // zoom in/out centered at click point
-  overlayImg.addEventListener('click', e => {
-    e.stopPropagation(); // don’t trigger backdrop-close
-
-    const rect = overlayImg.getBoundingClientRect();
-    const x    = e.clientX - rect.left;
-    const y    = e.clientY - rect.top;
-    const originX = (x / rect.width) * 100;
-    const originY = (y / rect.height) * 100;
-
-    // toggle zoom
-    if (zoomLevel === 1) {
-      zoomLevel = 2;
-      overlay.classList.add('zoomed');
-      overlayImg.style.transformOrigin = `${originX}% ${originY}%`;
-    } else {
-      zoomLevel = 1;
-      overlay.classList.remove('zoomed');
-      overlayImg.style.transformOrigin = 'center center';
-    }
-    overlayImg.style.transform = `scale(${zoomLevel})`;
-  });
-
-
-<!-- Game Search IGDB --> <!-- d71c1b0acf864d5aa28d292ff7c9f86b -->
-async function searchGame(event) {
-    event.preventDefault();
-    const q = document.getElementById('footer-igdb-search').value;
-    const apiKey = "d71c1b0acf864d5aa28d292ff7c9f86b";  // your RAWG key
-    const url = `https://api.rawg.io/api/games?search=${encodeURIComponent(q)}&key=${apiKey}`;
-
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`RAWG error ${res.status}`);
-      const data = await res.json();
-
-      const box = document.getElementById('steamrip-box');
-      if (data.results && data.results.length) {
-        const g = data.results[0];
-        // fetch details
-        const detailsRes = await fetch(
-          `https://api.rawg.io/api/games/${g.id}?key=${apiKey}`
-        );
-        const details = await detailsRes.json();
-
-        // fetch screenshots
-        const shotsRes = await fetch(
-          `https://api.rawg.io/api/games/${g.id}/screenshots?key=${apiKey}`
-        );
-        const shotsData = await shotsRes.json();
-        const shots = shotsData.results || [];
-
-        box.style.background = "#1c2833";
-        box.innerHTML = `
-          <div style="padding:20px;text-align:center;color:#ecf0f1;">
-            <h3 style="margin-bottom:10px;">${g.name}</h3>
-            <img id="main-image" src="${g.background_image}" alt="${g.name}"
-                 style="width:100%;max-height:300px;object-fit:cover;border-radius:5px;margin-bottom:5px;">
-            <div style="display:flex;justify-content:center;flex-wrap:wrap;margin-top:5px;">
-              ${shots.slice(0,5).map(s => `
-                <img src="${s.image}" alt="Shot" onclick="swapImage('${s.image}')"
-                     style="width:100px;margin:5px;border-radius:5px;cursor:pointer;">
-              `).join("")}
-            </div>
-            <p><strong>Release:</strong> ${g.released||'N/A'}</p>
-            <p><strong>About:</strong> ${details.description_raw||'No description.'}</p>
-            <a href="https://rawg.io/games/${g.slug}" target="_blank"
-               style="color:limegreen;text-decoration:none;font-weight:bold;">
-              See More
-            </a>
-          </div>`;
-      } else {
-        box.innerHTML = `<div style="padding:20px;text-align:center;color:#ecf0f1;">
-                           <p>No games found.</p>
-                         </div>`;
+  <script>
+    // Mobile off‑canvas init
+    window.addEventListener('load', () => {
+      if (window.innerWidth <= 768) {
+        document.body.classList.add('hide-left','hide-right');
       }
-    } catch (err) {
-      console.error("Error fetching game data:", err);
-      document.getElementById("steamrip-box").innerHTML =
-        `<div style="padding:20px;text-align:center;color:#ecf0f1;">
-           <p>Error fetching data. Please try again later.</p>
-         </div>`;
+      // your existing init
+      fetchIPAddress();
+      refreshAllRedditFrames();
+      setInterval(updateOSRSTable, 30000);
+      setInterval(refreshAllRedditFrames, 600000);
+    });
+
+    // Toggle both menus
+    function toggleAllMenus() {
+      document.body.classList.toggle('hide-left');
+      document.body.classList.toggle('hide-right');
     }
-  }
 
-	// Function to swap the main image with the clicked gallery image
-	function swapImage(newImageUrl) {
-		const mainImage = document.getElementById('main-image');
-		mainImage.src = newImageUrl;
-	}
+ // Lightbox overlay & zoom
+    const overlay    = document.getElementById('lightbox-overlay');
+    const overlayImg = document.getElementById('lightbox-img');
+    let zoomLevel    = 3;
 
+    // close when clicking backdrop
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) {
+        zoomLevel = 1;
+        overlayImg.style.transform = `scale(${zoomLevel})`;
+        overlayImg.style.transformOrigin = 'center center';
+        overlay.classList.remove('zoomed');
+        overlay.style.display = 'none';
+        overlayImg.src = '';
+      }
+    });
 
-	function showSection(sectionId) {
-		const sections = document.querySelectorAll('main > div');
-		sections.forEach(section => {
-			if (section.id === sectionId) {
-				section.style.display = 'flex';
-			} else {
-				section.style.display = 'none';
-			}
-		});
-	}
+    // zoom in/out centered at click point
+    overlayImg.addEventListener('click', e => {
+      e.stopPropagation(); // don’t trigger backdrop-close
+
+      const rect = overlayImg.getBoundingClientRect();
+      const x    = e.clientX - rect.left;
+      const y    = e.clientY - rect.top;
+      const originX = (x / rect.width) * 100;
+      const originY = (y / rect.height) * 100;
+
+      if (zoomLevel === 1) {
+        zoomLevel = 2;
+        overlay.classList.add('zoomed');
+        overlayImg.style.transformOrigin = `${originX}% ${originY}%`;
+      } else {
+        zoomLevel = 1;
+        overlay.classList.remove('zoomed');
+        overlayImg.style.transformOrigin = 'center center';
+      }
+      overlayImg.style.transform = `scale(${zoomLevel})`;
+    });
+
+    // Game Search IGDB -- d71c1b0acf864d5aa28d292ff7c9f86b
+    async function searchGame(event) {
+      event.preventDefault();
+      const q = document.getElementById('footer-igdb-search').value;
+      const apiKey = "d71c1b0acf864d5aa28d292ff7c9f86b";
+      const url = `https://api.rawg.io/api/games?search=${encodeURIComponent(q)}&key=${apiKey}`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`RAWG error ${res.status}`);
+        const data = await res.json();
+        const box = document.getElementById('steamrip-box');
+        if (data.results && data.results.length) {
+          const g = data.results[0];
+          const detailsRes = await fetch(`https://api.rawg.io/api/games/${g.id}?key=${apiKey}`);
+          const details = await detailsRes.json();
+          const shotsRes = await fetch(`https://api.rawg.io/api/games/${g.id}/screenshots?key=${apiKey}`);
+          const shotsData = await shotsRes.json();
+          const shots = shotsData.results || [];
+
+          box.style.background = "#1c2833";
+          box.innerHTML = `
+            <div style="padding:20px;text-align:center;color:#ecf0f1;">
+              <h3 style="margin-bottom:10px;">${g.name}</h3>
+              <img id="main-image" src="${g.background_image}" alt="${g.name}"
+                   style="width:100%;max-height:300px;object-fit:cover;border-radius:5px;margin-bottom:5px;">
+              <div style="display:flex;justify-content:center;flex-wrap:wrap;margin-top:5px;">
+                ${shots.slice(0,5).map(s => `
+                  <img src="${s.image}" alt="Shot" onclick="swapImage('${s.image}')"
+                       style="width:100px;margin:5px;border-radius:5px;cursor:pointer;">
+                `).join("")}
+              </div>
+              <p><strong>Release:</strong> ${g.released||'N/A'}</p>
+              <p><strong>About:</strong> ${details.description_raw||'No description.'}</p>
+              <a href="https://rawg.io/games/${g.slug}" target="_blank"
+                 style="color:limegreen;text-decoration:none;font-weight:bold;">
+                See More
+              </a>
+            </div>`;
+        } else {
+          box.innerHTML = `<div style="padding:20px;text-align:center;color:#ecf0f1;"><p>No games found.</p></div>`;
+        }
+      } catch (err) {
+        console.error("Error fetching game data:", err);
+        document.getElementById("steamrip-box").innerHTML =
+          `<div style="padding:20px;text-align:center;color:#ecf0f1;">
+             <p>Error fetching data. Please try again later.</p>
+           </div>`;
+      }
+    }
+
+    function swapImage(newImageUrl) {
+      const mainImage = document.getElementById('main-image');
+      if (mainImage) mainImage.src = newImageUrl;
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('main > div, #section5-wrapper').forEach(el => {
+        el.style.display = 'none';
+      });
+      const footer = document.getElementById('gaming-footer');
+      footer.style.display = 'none';
+
+      switch (id) {
+        case 'gaming-section':
+          document.getElementById('gaming-section').style.display = 'flex';
+          footer.style.display = 'flex';
+          break;
+        case 'osrs-section':
+          document.getElementById('osrs-section').style.display = 'flex';
+          updateOSRSTable();
+          break;
+        case 'section4':
+          refreshAllRedditFrames();
+          document.getElementById('section4').style.display = 'flex';
+          break;
+        case 'section5':
+          document.getElementById('section5-wrapper').style.display = 'flex';
+          break;
+        case 'section6':
+          document.getElementById('section6').style.display = 'flex';
+          break;
+      }
+    }
 
     // IP Functions
     const redFlagIPs = ["173.89.231.3","173.246.230.10"];
@@ -577,7 +632,7 @@ async function searchGame(event) {
         html+=`<tr onclick="loadOSRSItem(${it.id})">
           <td>${p.name}</td><td>${p.buy}</td><td>${p.sell}</td>
           <td class="${p.trendClass}">${p.trend}</td>
-        </tr>`;
+        </tr>`; 
       }
       tbody.innerHTML=html;
     }
@@ -594,7 +649,7 @@ async function searchGame(event) {
           return asc?A-B:B-A;
         }
         if(type==="trend"){
-          const m={"🔼":1,"🔽":-1} ;
+          const m={"🔼":1,"🔽":-1};
           A=m[A]||0; B=m[B]||0;
           return asc?A-B:B-A;
         }
@@ -607,202 +662,113 @@ async function searchGame(event) {
       document.getElementById('osrs-item-frame').src = `https://prices.runescape.wiki/osrs/item/${id}`;
     }
 
-
-
-
-
-
-
-
-
     // Reddit Media Functions
-  const recentPosts = { snsfw: [], nsfw: [] };
-  const MAX_HISTORY = 100;
-
-  // Retry on image load error
-  function handleMediaError(frameId, multi) {
-    fetchRandomRedditMedia(frameId, multi);
-  }
-
-  // Fetch and display a random, non‑duplicate Reddit media item
-  async function fetchRandomRedditMedia(frameId, multi) {
-    const endpoint = `https://www.reddit.com/user/boocheck/m/${multi}.json?limit=100`;
-    try {
-      const res  = await fetch(endpoint);
-      const json = await res.json();
-
-      // 1. Primary filter: images/gifs, score > 10, no preview.redd.it
-      let posts = json.data.children.filter(p => {
-        const u = p.data.url;
-        return (
-          (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
-          !u.includes('preview.redd.it') &&
-          p.data.score > 10
-        );
-      });
-
-      // 2. Exclude ones we've just shown
-      posts = posts.filter(p => !recentPosts[multi].includes(p.data.url));
-
-      // 3. If none remain, reset history and re‑filter
-      if (!posts.length) {
-        recentPosts[multi] = [];
-        posts = json.data.children.filter(p => {
+    const recentPosts = { snsfw: [], nsfw: [] };
+    const MAX_HISTORY = 100;
+    function handleMediaError(frameId, multi) {
+      fetchRandomRedditMedia(frameId, multi);
+    }
+    async function fetchRandomRedditMedia(frameId, multi) {
+      const endpoint = `https://www.reddit.com/user/boocheck/m/${multi}.json?limit=100`;
+      try {
+        const res  = await fetch(endpoint);
+        const json = await res.json();
+        let posts = json.data.children.filter(p => {
           const u = p.data.url;
           return (
             (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
+            !u.includes('preview.redd.it') &&
             p.data.score > 10
           );
         });
+        posts = posts.filter(p => !recentPosts[multi].includes(p.data.url));
+        if (!posts.length) {
+          recentPosts[multi] = [];
+          posts = json.data.children.filter(p => {
+            const u = p.data.url;
+            return (
+              (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
+              p.data.score > 10
+            );
+          });
+        }
+        if (!posts.length) return;
+        const choice = posts[Math.floor(Math.random() * posts.length)];
+        const url    = choice.data.url;
+        recentPosts[multi].push(url);
+        if (recentPosts[multi].length > MAX_HISTORY) recentPosts[multi].shift();
+        const iframe = document.getElementById(frameId);
+        const doc    = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(`
+          <html><head><style>
+            html, body {
+              margin:0; padding:0; width:100%; height:100%;
+              overflow:hidden; background:#1c2833;
+              display:flex; align-items:center; justify-content:center;
+            }
+            img {
+              width:100%; height:100%; object-fit:contain; border-radius:5px;
+            }
+          </style></head>
+          <body>
+            <img src="${url}" alt="Reddit Media"
+                 onerror="window.parent.handleMediaError('${frameId}','${multi}')">
+          </body></html>
+        `);
+        doc.close();
+        iframe.parentElement.querySelector('.click-catcher').onclick = () => {
+          overlayImg.src        = url;
+          overlay.style.display = 'flex';
+        };
+      } catch (err) {
+        console.error('Reddit fetch error', err);
       }
-      if (!posts.length) return;  // still nothing to show
-
-      // 4. Pick one at random
-      const choice = posts[Math.floor(Math.random() * posts.length)];
-      const url    = choice.data.url;
-
-      // 5. Record in history
-      recentPosts[multi].push(url);
-      if (recentPosts[multi].length > MAX_HISTORY) {
-        recentPosts[multi].shift();
-      }
-
-      // 6. Write into the iframe
-      const iframe = document.getElementById(frameId);
-      const doc    = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(`
-        <html><head><style>
-          html, body {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; background: #1c2833;
-            display: flex; align-items: center; justify-content: center;
-          }
-          img {
-            width: 100%; height: 100%; object-fit: contain;
-            border-radius: 5px;
-          }
-        </style></head>
-        <body>
-          <img
-            src="${url}"
-            alt="Reddit Media"
-            onerror="window.parent.handleMediaError('${frameId}','${multi}')"
-          />
-        </body></html>
-      `);
-      doc.close();
-
-      // 7. Hook up lightbox click
-      const catcher = iframe.parentElement.querySelector('.click-catcher');
-      catcher.onclick = () => {
-        overlayImg.src         = url;
-        overlay.style.display  = 'flex';
-      };
-    } catch (err) {
-      console.error('Reddit fetch error', err);
     }
-  }
-
-  // Kick off loading for all six Reddit frames
-  function refreshAllRedditFrames(){
-    ['reddit-frame-1','reddit-frame-2','reddit-frame-3',
-     'reddit-frame-4','reddit-frame-5','reddit-frame-6']
-      .forEach((id, idx) => {
-        const multi = idx < 3 ? 'snsfw' : 'nsfw';
-        fetchRandomRedditMedia(id, multi);
-      });
-  }
-
-
-
-
-
-
-
-
-
-
+    function refreshAllRedditFrames(){
+      ['reddit-frame-1','reddit-frame-2','reddit-frame-3',
+       'reddit-frame-4','reddit-frame-5','reddit-frame-6']
+        .forEach((id, idx) => {
+          const multi = idx < 3 ? 'snsfw' : 'nsfw';
+          fetchRandomRedditMedia(id, multi);
+        });
+    }
 
     // Utility
-    function swapImage(u){ const m=document.getElementById('main-image'); if(m) m.src=u; }
-    function resetSteamRip(){ document.getElementById('steamrip-box').innerHTML =
-      `<iframe src="https://steamrip.com/" loading="lazy" 
-         style="width:100%;height:100%;border:none;border-radius:5px;"></iframe>`; }
-    function sailTheSeasSearch(e){ e.preventDefault();
-      const q=document.getElementById('sts-search').value;
-      window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`,'_blank');
+    function resetSteamRip(){
+      document.getElementById('steamrip-box').innerHTML =
+        `<iframe src="https://steamrip.com/" loading="lazy"
+           style="width:100%;height:100%;border:none;border-radius:5px;"></iframe>`;
+    }
+    function sailTheSeasSearch(e){
+      e.preventDefault();
+      const q = document.getElementById('sts-search').value;
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, '_blank');
     }
     function toggleAllMenus(){
       document.body.classList.toggle('hide-left');
       document.body.classList.toggle('hide-right');
     }
-	function refreshModels() {
-	  ['model-frame-1', 'model-frame-2'].forEach(id => {
-		const iframe = document.getElementById(id);
-		// force reload by clearing and resetting src
-		const src = iframe.src;
-		iframe.src = '';
-		iframe.src = src;
-	  });
-	}
-	
-	
-function showSection(id) {
-  // hide every main <div> and the models wrapper
-  document.querySelectorAll('main > div, #section5-wrapper').forEach(el => {
-    el.style.display = 'none';
-  });
-  // hide the gaming footer by default
-  const footer = document.getElementById('gaming-footer');
-  footer.style.display = 'none';
-
-  switch (id) {
-    case 'gaming-section':
-      document.getElementById('gaming-section').style.display = 'flex';
-      footer.style.display = 'flex';
-      break;
-
-    case 'osrs-section':
-      document.getElementById('osrs-section').style.display = 'flex';
-      updateOSRSTable();
-      break;
-
-    case 'section4':        // Reddit grid
-		refreshAllRedditFrames();	
-      document.getElementById('section4').style.display = 'flex';
-      break;
-
-    case 'section5':        // Elite models
-      document.getElementById('section5-wrapper').style.display = 'flex';
-      break;
-
-    case 'section6':        // if you have a Section 6
-      document.getElementById('section6').style.display = 'flex';
-      break;
-  }
-}
-
-
-
+    function refreshModels() {
+      ['model-frame-1','model-frame-2'].forEach(id => {
+        const iframe = document.getElementById(id);
+        const src = iframe.src;
+        iframe.src = '';
+        iframe.src = src;
+      });
+    }
 
     // On Load
-	// at the bottom of your <script> block, delete the old async load handler
-	window.addEventListener('load', () => {
-	  // show the Gaming section right away
-
-
-	  // fire-and-forget the IP lookup
-	  fetchIPAddress();
-
-	  // fetch your Reddit frames immediately
-	  refreshAllRedditFrames();
-
-	  // set up your auto‑refresh intervals
-	  setInterval(updateOSRSTable,    30000);
-	  setInterval(refreshAllRedditFrames, 600000);
-	});
-
+    window.addEventListener('load', () => {
+      if (window.innerWidth <= 768) {
+        document.body.classList.add('hide-left','hide-right');
+      }
+      fetchIPAddress();
+      refreshAllRedditFrames();
+      setInterval(updateOSRSTable,    30000);
+      setInterval(refreshAllRedditFrames, 600000);
+    });
+  </script>
   </script>
 </body>
 </html>
