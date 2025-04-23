@@ -662,139 +662,77 @@
       document.getElementById('osrs-item-frame').src = `https://prices.runescape.wiki/osrs/item/${id}`;
     }
 
-// Reddit Media Functions 
-// ————— JSON-driven Reddit Media Setup —————
-
-// 1) placeholders & config
-let subreddits = [];
-const recentUrls  = new Set();
-const MAX_HISTORY = 1000;
-const MIN_SCORE   = 800;
-const FETCH_LIMIT = 1000;
-
-// 2) bootstraps the subreddits list, then starts the grid
-async function initRedditGrid() {
-  try {
-    const resp = await fetch('data/nsfw-subreddits.json');
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    subreddits = await resp.json();
-  } catch (err) {
-    console.error('Could not load subs JSON, falling back:', err);
-    subreddits = ['realgirls','amateur','GoneWild'];
-  }
-
-  // first render and schedule auto-refresh
-  refreshAllRedditFrames();
-  setInterval(refreshAllRedditFrames, 600_000);
-}
-
-// 3) error handler if an image fails to load
-function handleMediaError(frameId) {
-  fetchRandomSubredditMedia(frameId);
-}
-
-// 4) fetch & render one random image for a given iframe
-async function fetchRandomSubredditMedia(frameId) {
-  // pick a random subreddit from the JSON-loaded list
-  const sub = subreddits[Math.floor(Math.random() * subreddits.length)];
-  const endpoint = `https://www.reddit.com/r/${sub}/hot.json?limit=${FETCH_LIMIT}`;
-
-  try {
-    const res  = await fetch(endpoint);
-    const json = await res.json();
-
-    // filter for valid images above score threshold
-    let posts = json.data.children.filter(p => {
-      const u = p.data.url;
-      return (
-        (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
-        p.data.score > MIN_SCORE &&
-        !recentUrls.has(u)
-      );
-    });
-
-    // if we ran out, clear history and retry
-    if (!posts.length) {
-      recentUrls.clear();
-      posts = json.data.children.filter(p =>
-        (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(p.data.url)) &&
-        p.data.score > MIN_SCORE
-      );
+    // Reddit Media Functions
+    const recentPosts = { snsfw: [], nsfw: [] };
+    const MAX_HISTORY = 100;
+    function handleMediaError(frameId, multi) {
+      fetchRandomRedditMedia(frameId, multi);
     }
-    if (!posts.length) return;  // nothing valid
-
-    // pick one, record in history, trim if needed
-    const choice = posts[Math.floor(Math.random() * posts.length)].data;
-    const url    = choice.url;
-    recentUrls.add(url);
-    if (recentUrls.size > MAX_HISTORY) {
-      const oldest = recentUrls.values().next().value;
-      recentUrls.delete(oldest);
+    async function fetchRandomRedditMedia(frameId, multi) {
+      const endpoint = `https://www.reddit.com/user/boocheck/m/${multi}.json?limit=100`;
+      try {
+        const res  = await fetch(endpoint);
+        const json = await res.json();
+        let posts = json.data.children.filter(p => {
+          const u = p.data.url;
+          return (
+            (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
+            !u.includes('preview.redd.it') &&
+            p.data.score > 10
+          );
+        });
+        posts = posts.filter(p => !recentPosts[multi].includes(p.data.url));
+        if (!posts.length) {
+          recentPosts[multi] = [];
+          posts = json.data.children.filter(p => {
+            const u = p.data.url;
+            return (
+              (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
+              p.data.score > 10
+            );
+          });
+        }
+        if (!posts.length) return;
+        const choice = posts[Math.floor(Math.random() * posts.length)];
+        const url    = choice.data.url;
+        recentPosts[multi].push(url);
+        if (recentPosts[multi].length > MAX_HISTORY) recentPosts[multi].shift();
+        const iframe = document.getElementById(frameId);
+        const doc    = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(`
+          <html><head><style>
+            html, body {
+              margin:0; padding:0; width:100%; height:100%;
+              overflow:hidden; background:#1c2833;
+              display:flex; align-items:center; justify-content:center;
+            }
+            img {
+              width:100%; height:100%; object-fit:contain; border-radius:5px;
+            }
+          </style></head>
+          <body>
+            <img src="${url}" alt="Reddit Media"
+                 onerror="window.parent.handleMediaError('${frameId}','${multi}')">
+          </body></html>
+        `);
+        doc.close();
+        iframe.parentElement.querySelector('.click-catcher').onclick = () => {
+          overlayImg.src        = url;
+          overlay.style.display = 'flex';
+        };
+      } catch (err) {
+        console.error('Reddit fetch error', err);
+      }
     }
-
-    // inject into the iframe
-    const iframe = document.getElementById(frameId);
-    const doc    = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open();
-    doc.write(`
-      <html><head><style>
-        html, body {
-          margin:0; padding:0; width:100%; height:100%;
-          overflow:hidden; background:#1c2833;
-          display:flex; align-items:center; justify-content:center;
-        }
-        img {
-          width:100%; height:100%; object-fit:contain; border-radius:5px;
-        }
-      </style></head>
-      <body>
-        <img src="${url}" alt="r/${sub}"
-             onerror="window.parent.handleMediaError('${frameId}')">
-      </body></html>
-    `);
-    doc.close();
-
-    // wire up click-to-overlay
-    iframe.parentElement.querySelector('.click-catcher')
-           .onclick = () => {
-      overlayImg.src        = url;
-      overlay.style.display = 'flex';
-    };
-  } catch (err) {
-    console.error('Subreddit fetch error:', err);
-  }
-}
-
-// 5) helper to refresh all six frames
-function refreshAllRedditFrames() {
-  ['reddit-frame-1','reddit-frame-2','reddit-frame-3',
-   'reddit-frame-4','reddit-frame-5','reddit-frame-6']
-    .forEach(id => fetchRandomSubredditMedia(id));
-}
-
-// 6) kick everything off on page load
-window.addEventListener('load', initRedditGrid);
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+    function refreshAllRedditFrames(){
+      ['reddit-frame-1','reddit-frame-2','reddit-frame-3',
+       'reddit-frame-4','reddit-frame-5','reddit-frame-6']
+        .forEach((id, idx) => {
+          const multi = idx < 3 ? 'snsfw' : 'nsfw';
+          fetchRandomRedditMedia(id, multi);
+        });
+    }
 
     // Utility
     function resetSteamRip(){
@@ -830,6 +768,7 @@ window.addEventListener('load', initRedditGrid);
       setInterval(updateOSRSTable,    30000);
       setInterval(refreshAllRedditFrames, 600000);
     });
+  </script>
   </script>
 </body>
 </html>
