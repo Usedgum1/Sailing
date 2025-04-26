@@ -597,19 +597,31 @@
     }
 
     // OSRS Price Functions
-    async function fetchOSRSPrice(id,name) {
-      try {
-        const res = await fetch(`https://prices.runescape.wiki/api/v1/osrs/latest?id=${id}`);
-        const json = await res.json();
-        const d = json.data[id];
-        let cls="trend-neutral", arrow="➡️";
-        if(d.high>d.low){ cls="trend-up"; arrow="🔼"; }
-        else if(d.high<d.low){ cls="trend-down"; arrow="🔽"; }
-        return { name, buy: d.high.toLocaleString(), sell: d.low.toLocaleString(), trend:arrow, trendClass:cls };
-      } catch {
-        return { name, buy:"N/A", sell:"N/A", trend:"", trendClass:"trend-neutral" };
-      }
-    }
+	async function fetchOSRSPrice(id, name) {
+		  try {
+			const res = await fetch(`https://prices.runescape.wiki/api/v1/osrs/latest?id=${id}`);
+			const json = await res.json();
+			const d = json.data[id];
+			let diff = Math.abs(d.high - d.low);
+			let cls = "trend-neutral", arrow = "➡️";
+
+			if (d.high > d.low) {
+			  cls = "trend-up";
+			  if (diff <= 5000000) arrow = "🔼";
+			  else if (diff <= 10000000) arrow = "🔼🔼";
+			  else arrow = "🔼🔼🔼";
+			} else if (d.high < d.low) {
+			  cls = "trend-down";
+			  if (diff <= 5000000) arrow = "🔽";
+			  else if (diff <= 10000000) arrow = "🔽🔽";
+			  else arrow = "🔽🔽🔽";
+			}
+
+			return { name, buy: d.high.toLocaleString(), sell: d.low.toLocaleString(), trend: arrow, trendClass: cls };
+		  } catch {
+			return { name, buy: "N/A", sell: "N/A", trend: "", trendClass: "trend-neutral" };
+		  }
+		}
     const osrsItems = [
       {id:20997,name:"Twisted Bow"},{id:22486,name:"Scythe of Vitur"},
       {id:27277,name:"Tumeken's Shadow"},{id:26384,name:"Torva platebody"},
@@ -624,40 +636,34 @@
       {id:21049,name:"Ancestral robes set"},{id:24514,name:"Volatile orb"},
       {id:21006,name:"Kodai wand"}
     ];
-    async function updateOSRSTable(){
-      const tbody=document.querySelector("#osrs-table tbody");
-      let html="";
-      for(const it of osrsItems){
-        const p=await fetchOSRSPrice(it.id,it.name);
-        html+=`<tr onclick="loadOSRSItem(${it.id})">
-          <td>${p.name}</td><td>${p.buy}</td><td>${p.sell}</td>
-          <td class="${p.trendClass}">${p.trend}</td>
-        </tr>`; 
-      }
-      tbody.innerHTML=html;
-    }
-    function sortTable(col){
-      const tbl=document.getElementById("osrs-table"), tbody=tbl.tBodies[0];
-      const rows=Array.from(tbody.rows);
-      const asc = !(tbody.dataset[`sort${col}`]==="desc");
-      tbody.dataset[`sort${col}`] = asc?"desc":"asc";
-      const type=tbl.tHead.rows[0].cells[col].dataset.type;
-      rows.sort((a,b)=>{
-        let A=a.cells[col].innerText.trim(), B=b.cells[col].innerText.trim();
-        if(type==="number"){
-          A=parseFloat(A.replace(/[^\d.-]/g,"")); B=parseFloat(B.replace(/[^\d.-]/g,""));
-          return asc?A-B:B-A;
-        }
-        if(type==="trend"){
-          const m={"🔼":1,"🔽":-1};
-          A=m[A]||0; B=m[B]||0;
-          return asc?A-B:B-A;
-        }
-        return asc?A.localeCompare(B):B.localeCompare(A);
-      });
-      tbody.innerHTML="";
-      rows.forEach(r=>tbody.appendChild(r));
-    }
+	
+	let currentSort = { col: 0, asc: true };
+
+	async function updateOSRSTable(){
+	  const tbody = document.querySelector("#osrs-table tbody");
+	  let itemsData = await Promise.all(osrsItems.map(it => fetchOSRSPrice(it.id, it.name)));
+
+	  itemsData.sort((a, b) => {
+		const col = currentSort.col;
+		let A = [a.name, parseFloat(a.buy.replace(/,/g, '')), parseFloat(a.sell.replace(/,/g, ''))][col];
+		let B = [b.name, parseFloat(b.buy.replace(/,/g, '')), parseFloat(b.sell.replace(/,/g, ''))][col];
+		if (typeof A === 'string') return currentSort.asc ? A.localeCompare(B) : B.localeCompare(A);
+		return currentSort.asc ? A - B : B - A;
+	  });
+
+	  tbody.innerHTML = itemsData.map(p => `
+		<tr onclick="loadOSRSItem(${osrsItems.find(i => i.name === p.name).id})">
+		  <td>${p.name}</td><td>${p.buy}</td><td>${p.sell}</td>
+		  <td class="${p.trendClass}">${p.trend}</td>
+		</tr>
+	  `).join('');
+	}
+
+	function sortTable(col){
+	  currentSort.asc = (currentSort.col === col) ? !currentSort.asc : true;
+	  currentSort.col = col;
+	  updateOSRSTable();
+	}
     function loadOSRSItem(id){
       document.getElementById('osrs-item-frame').src = `https://prices.runescape.wiki/osrs/item/${id}`;
     }
@@ -723,7 +729,7 @@ const subreddits = [
 
 const recentUrls   = new Set();
 const MAX_HISTORY  = 10000;
-const MIN_SCORE    = 100;      // net score threshold
+const MIN_SCORE    = 50;      // net score threshold
 const FETCH_LIMIT  = 10000;   // how many posts to pull each time
 
 // ————— Error handler —————
@@ -732,107 +738,65 @@ function handleMediaError(frameId) {
 }
 
 // ————— Fetch & render a random subreddit image —————
-async function fetchRandomSubredditMedia(frameId) {
-  // 1) pick a random subreddit
-  const sub = subreddits[Math.floor(Math.random() * subreddits.length)];
-  const endpoint = `https://www.reddit.com/r/${sub}/new.json?limit=${FETCH_LIMIT}`;
+    async function fetchRandomSubredditMedia(frameId) {
+      const sub = subreddits[Math.floor(Math.random() * subreddits.length)];
+      const endpoint = `https://www.reddit.com/r/${sub}/hot.json?limit=${FETCH_LIMIT}`;
 
-  try {
-    const res  = await fetch(endpoint);
-    const json = await res.json();
+      try {
+        const res = await fetch(endpoint);
+        const json = await res.json();
+        let posts = json.data.children.filter(p => (
+          (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(p.data.url)) &&
+          p.data.score > MIN_SCORE
+        )).filter(p => !recentUrls.has(p.data.url));
 
-    // 2) filter to true images above score threshold
-    let posts = json.data.children.filter(p => {
-      const u = p.data.url;
-      return (
-        (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(u)) &&
-        p.data.score > MIN_SCORE
-      );
-    });
-
-    // 3) de-dupe against global history
-    posts = posts.filter(p => !recentUrls.has(p.data.url));
-    if (!posts.length) {
-      // if exhausted, clear history and try again
-      recentUrls.clear();
-      posts = json.data.children.filter(p =>
-        (p.data.post_hint==='image' || /\.(jpe?g|png|gif)$/i.test(p.data.url)) &&
-        p.data.score > MIN_SCORE
-      );
-    }
-    if (!posts.length) return; // nothing to show
-
-    // 4) pick, record, and trim history
-    const choice = posts[Math.floor(Math.random() * posts.length)];
-    const url    = choice.data.url;
-    recentUrls.add(url);
-    if (recentUrls.size > MAX_HISTORY) {
-      // simple FIFO trim: convert to array, drop oldest
-      const oldest = Array.from(recentUrls)[0];
-      recentUrls.delete(oldest);
-    }
-
-    // 5) render into the iframe
-    const iframe = document.getElementById(frameId);
-    const doc    = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open();
-    doc.write(`
-      <html><head><style>
-        html, body {
-          margin:0; padding:0; width:100%; height:100%;
-          overflow:hidden; background:#1c2833;
-          display:flex; align-items:center; justify-content:center;
+        if (!posts.length) {
+          recentUrls.clear();
+          posts = json.data.children.filter(p => (
+            (p.data.post_hint === 'image' || /\.(jpe?g|png|gif)$/i.test(p.data.url)) &&
+            p.data.score > MIN_SCORE
+          ));
         }
-        img {
-          width:100%; height:100%; object-fit:contain; border-radius:5px;
+
+        if (!posts.length) return;
+
+        const choice = posts[Math.floor(Math.random() * posts.length)];
+        const url = choice.data.url;
+        recentUrls.add(url);
+        if (recentUrls.size > MAX_HISTORY) {
+          recentUrls.delete(Array.from(recentUrls)[0]);
         }
-      </style></head>
-      <body>
-        <img src="${url}" alt="r/${sub}"
-             onerror="window.parent.handleMediaError('${frameId}')">
-      </body></html>
-    `);
-    doc.close();
 
-    // 6) re-attach click overlay
-    iframe.parentElement.querySelector('.click-catcher')
-           .onclick = () => {
-      overlayImg.src        = url;
-      overlay.style.display = 'flex';
-    };
+        const iframe = document.getElementById(frameId);
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(`
+          <html><head><style>
+            html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#1c2833;display:flex;align-items:center;justify-content:center;}
+            img{width:100%;height:100%;object-fit:contain;border-radius:5px;}
+          </style></head>
+          <body><img src="${url}" alt="r/${sub}" onerror="window.parent.handleMediaError('${frameId}')"></body>
+          </html>
+        `);
+        doc.close();
 
-  } catch (err) {
-    console.error('Subreddit fetch error', err);
-  }
-}
+        iframe.parentElement.querySelector('.click-catcher').onclick = () => {
+          overlayImg.src = url;
+          overlay.style.display = 'flex';
+        };
 
-// ————— Refresh all six frames —————
-function refreshAllRedditFrames() {
-  ['reddit-frame-1','reddit-frame-2','reddit-frame-3',
-   'reddit-frame-4','reddit-frame-5','reddit-frame-6']
-    .forEach(id => fetchRandomSubredditMedia(id));
-}
+      } catch (err) { console.error('Subreddit fetch error', err); }
+    }
+
+    function handleMediaError(frameId) { fetchRandomSubredditMedia(frameId); }
+
+    function refreshAllRedditFrames() {
+      ['reddit-frame-1','reddit-frame-2','reddit-frame-3','reddit-frame-4','reddit-frame-5','reddit-frame-6']
+        .forEach(fetchRandomSubredditMedia);
+    }
 
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
 
     // Utility
     function resetSteamRip(){
@@ -865,7 +829,7 @@ function refreshAllRedditFrames() {
       }
       fetchIPAddress();
       refreshAllRedditFrames();
-      setInterval(updateOSRSTable,    30000);
+      setInterval(updateOSRSTable,    3000);
       setInterval(refreshAllRedditFrames, 600000);
     });
   </script>
