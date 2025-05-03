@@ -597,74 +597,76 @@
     }
 
     // OSRS Price Functions
-	async function fetchOSRSPrice(id, name) {
-		  try {
-			const res = await fetch(`https://prices.runescape.wiki/api/v1/osrs/latest?id=${id}`);
-			const json = await res.json();
-			const d = json.data[id];
-			let diff = Math.abs(d.high - d.low);
-			let cls = "trend-neutral", arrow = "➡️";
+    async function fetchOSRSPrice(id, name) {
+      try {
+        const res = await fetch(`https://prices.runescape.wiki/api/v1/osrs/latest?id=${id}`);
+        const json = await res.json();
+        const d = json.data[id];
+        const diff = Math.abs(d.high - d.low);
+        let cls = 'trend-neutral', arrow = '➡️';
+        if (d.high > d.low) {
+          cls = 'trend-up';
+          if (diff <= 1000000) arrow = '🔼';
+          else if (diff <= 5000000) arrow = '🔼🔼';
+          else arrow = '🔼🔼🔼';
+        } else if (d.high < d.low) {
+          cls = 'trend-down';
+          if (diff <= 1000000) arrow = '🔽';
+          else if (diff <= 5000000) arrow = '🔽🔽';
+          else arrow = '🔽🔽🔽';
+        }
+        return { name, buy: d.high.toLocaleString(), sell: d.low.toLocaleString(), trend: arrow, trendClass: cls };
+      } catch {
+        return { name, buy: 'N/A', sell: 'N/A', trend: '', trendClass: 'trend-neutral' };
+      }
+    }
 
-			if (d.high > d.low) {
-			  cls = "trend-up";
-			  if (diff <= 5000000) arrow = "🔼";
-			  else if (diff <= 10000000) arrow = "🔼🔼";
-			  else arrow = "🔼🔼🔼";
-			} else if (d.high < d.low) {
-			  cls = "trend-down";
-			  if (diff <= 5000000) arrow = "🔽";
-			  else if (diff <= 10000000) arrow = "🔽🔽";
-			  else arrow = "🔽🔽🔽";
-			}
-
-			return { name, buy: d.high.toLocaleString(), sell: d.low.toLocaleString(), trend: arrow, trendClass: cls };
-		  } catch {
-			return { name, buy: "N/A", sell: "N/A", trend: "", trendClass: "trend-neutral" };
-		  }
-		}
     const osrsItems = [
-      {id:20997,name:"Twisted Bow"},{id:22486,name:"Scythe of Vitur"},
-      {id:27277,name:"Tumeken's Shadow"},{id:26384,name:"Torva platebody"},
-      {id:24511,name:"Harmonised orb"},{id:11256,name:"Dragon impling jar"},
-      {id:12817,name:"Elysian spirit shield"},{id:26374,name:"Zaryte crossbow"},
-      {id:27641,name:"Saturated Heart"},{id:28307,name:"Ultor ring"},
-      {id:23997,name:"Blade of saeldor"},{id:25862,name:"Bow of faerdhinen"},
-      {id:11785,name:"Armadyl crossbow"},{id:29796,name:"Noxious halberd"},
-      {id:12825,name:"Arcane spirit shield"},{id:24417,name:"Inquisitor's mace"},
-      {id:24488,name:"Inquisitor's armour set"},{id:28338,name:"Soulreaper axe"},
-      {id:24517,name:"Eldritch orb"},{id:28316,name:"Bellator ring"},
-      {id:21049,name:"Ancestral robes set"},{id:24514,name:"Volatile orb"},
-      {id:21006,name:"Kodai wand"}
+      { id: 20997, name: 'Twisted Bow' }, { id: 22486, name: 'Scythe of Vitur' },
+      { id: 27277, name: "Tumeken's Shadow" }, { id: 26384, name: 'Torva platebody' },
+      { id: 24511, name: 'Harmonised orb' }, { id: 11256, name: 'Dragon impling jar' },
+      { id: 12817, name: 'Elysian spirit shield' }, { id: 26374, name: 'Zaryte crossbow' },
+      { id: 27641, name: 'Saturated Heart' }, { id: 28307, name: 'Ultor ring' },
+      { id: 23997, name: 'Blade of saeldor' }, { id: 25862, name: 'Bow of faerdhinen' },
+      { id: 11785, name: 'Armadyl crossbow' }, { id: 29796, name: 'Noxious halberd' },
+      { id: 12825, name: 'Arcane spirit shield' }, { id: 24417, name: "Inquisitor's mace" },
+      { id: 24488, name: "Inquisitor's armour set" }, { id: 28338, name: 'Soulreaper axe' },
+      { id: 24517, name: 'Eldritch orb' }, { id: 28316, name: 'Bellator ring' },
+      { id: 21049, name: 'Ancestral robes set' }, { id: 24514, name: 'Volatile orb' },
+      { id: 21006, name: 'Kodai wand' }
     ];
-	
-	let currentSort = { col: 0, asc: true };
+    let currentSort = { col: 0, asc: true };
+    const trendOrder = ['🔼🔼🔼', '🔼🔼', '🔼', '➡️', '🔽', '🔽🔽', '🔽🔽🔽'];
 
-	async function updateOSRSTable(){
-	  const tbody = document.querySelector("#osrs-table tbody");
-	  let itemsData = await Promise.all(osrsItems.map(it => fetchOSRSPrice(it.id, it.name)));
+    async function updateOSRSTable() {
+      const tbody = document.querySelector('#osrs-table tbody');
+      const items = await Promise.all(osrsItems.map(i => fetchOSRSPrice(i.id, i.name)));
+      items.sort((a, b) => {
+        const col = currentSort.col;
+        if (col === 3) {
+          const rA = trendOrder.indexOf(a.trend), rB = trendOrder.indexOf(b.trend);
+          return currentSort.asc ? rA - rB : rB - rA;
+        }
+        const getVal = it => [it.name, parseFloat(it.buy.replace(/,/g, '')), parseFloat(it.sell.replace(/,/g, ''))][col];
+        const A = getVal(a), B = getVal(b);
+        return typeof A === 'string' ? (currentSort.asc ? A.localeCompare(B) : B.localeCompare(A)) : (currentSort.asc ? A - B : B - A);
+      });
+      tbody.innerHTML = items.map(p => `
+        <tr onclick="loadOSRSItem(${osrsItems.find(i => i.name === p.name).id})">
+          <td>${p.name}</td>
+          <td>${p.buy}</td>
+          <td>${p.sell}</td>
+          <td class="${p.trendClass}">${p.trend}</td>
+        </tr>
+      `).join('');
+    }
 
-	  itemsData.sort((a, b) => {
-		const col = currentSort.col;
-		let A = [a.name, parseFloat(a.buy.replace(/,/g, '')), parseFloat(a.sell.replace(/,/g, ''))][col];
-		let B = [b.name, parseFloat(b.buy.replace(/,/g, '')), parseFloat(b.sell.replace(/,/g, ''))][col];
-		if (typeof A === 'string') return currentSort.asc ? A.localeCompare(B) : B.localeCompare(A);
-		return currentSort.asc ? A - B : B - A;
-	  });
-
-	  tbody.innerHTML = itemsData.map(p => `
-		<tr onclick="loadOSRSItem(${osrsItems.find(i => i.name === p.name).id})">
-		  <td>${p.name}</td><td>${p.buy}</td><td>${p.sell}</td>
-		  <td class="${p.trendClass}">${p.trend}</td>
-		</tr>
-	  `).join('');
-	}
-
-	function sortTable(col){
-	  currentSort.asc = (currentSort.col === col) ? !currentSort.asc : true;
-	  currentSort.col = col;
-	  updateOSRSTable();
-	}
-    function loadOSRSItem(id){
+    function sortTable(col) {
+      currentSort.asc = currentSort.col === col ? !currentSort.asc : true;
+      currentSort.col = col;
+      updateOSRSTable();
+    }
+    function loadOSRSItem(id) {
       document.getElementById('osrs-item-frame').src = `https://prices.runescape.wiki/osrs/item/${id}`;
     }
 
