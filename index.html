@@ -604,17 +604,17 @@
         const d = json.data[id];
         const diff = Math.abs(d.high - d.low);
         let cls = 'trend-neutral', arrow = '➡️';
-        if (d.high > d.low) {
-          cls = 'trend-up';
-          if (diff <= 1000000) arrow = '🔼';
-          else if (diff <= 5000000) arrow = '🔼🔼';
-          else arrow = '🔼🔼🔼';
-        } else if (d.high < d.low) {
-          cls = 'trend-down';
-          if (diff <= 1000000) arrow = '🔽';
-          else if (diff <= 5000000) arrow = '🔽🔽';
-          else arrow = '🔽🔽🔽';
-        }
+	if (d.high > d.low) {
+	  cls = 'trend-up';
+	  if (diff > 0 && diff <= 5000000) arrow = '🔼';
+	  else if (diff <= 10000000) arrow = '🔼🔼';
+	  else arrow = '🔼🔼🔼';
+	} else if (d.high < d.low) {
+	  cls = 'trend-down';
+	  if (diff > 0 && diff <= 5000000) arrow = '🔽';
+	  else if (diff <= 10000000) arrow = '🔽🔽';
+	  else arrow = '🔽🔽🔽';
+	}
         return { name, buy: d.high.toLocaleString(), sell: d.low.toLocaleString(), trend: arrow, trendClass: cls };
       } catch {
         return { name, buy: 'N/A', sell: 'N/A', trend: '', trendClass: 'trend-neutral' };
