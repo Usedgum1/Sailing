@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="copper" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decanting - Flipwise</title>
+    <script>
+        (function() {
+            try {
+                var p = localStorage.getItem('themePalette') || 'copper';
+                var m = localStorage.getItem('themeMode') || localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', p);
+                document.documentElement.setAttribute('data-mode', m);
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/flipwise-theme.css">
+    <link rel="stylesheet" href="css/flipwise-themes.css">
+    <link rel="stylesheet" href="css/flipwise-pages.css">
+</head>
+<body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-time">
+                <div class="sidebar-time-label">Last refreshed</div>
+                <div class="sidebar-time-clock" id="refresh-clock">—</div>
+                <div class="sidebar-time-sub" id="refresh-last">—</div>
+                <div class="sidebar-time-actions">
+                    <button type="button" class="sidebar-time-btn" id="refresh-btn" title="Refresh">Refresh</button>
+                    <label class="sidebar-time-auto">
+                        <input type="checkbox" id="auto-refresh-checkbox" checked>
+                        <span>Auto (15s)</span>
+                    </label>
+                </div>
+            </div>
+            <nav class="nav-section">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="markets.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                    Markets
+                </a>
+                <a href="scanner.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Trade Scanner
+                </a>
+                <a href="money-makers.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Unusual Methods
+                </a>
+                <a href="enchanting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M6 18l2-2 2 2 2-2 2 2"/>
+                    </svg>
+                    Enchanting
+                </a>
+                <a href="outfit-sets.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="8" height="6" rx="1"/><rect x="13" y="14" width="8" height="6" rx="1"/>
+                    </svg>
+                    Outfit Sets
+                </a>
+                <a href="tree-saplings.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22v-8M12 14c-2-2-5-3-8-2-1 3-1 6 2 8M12 14c2-2 5-3 8-2 1 3 1 6-2 8M12 8c-2-1-4-1-6 0-1 2 0 4 2 5M12 8c2-1 4-1 6 0 1 2 0 4-2 5"/>
+                    </svg>
+                    Tree Saplings
+                </a>
+                <a href="decanting.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2h6v2l1.5 16h-9L9 4V2z"/>
+                    </svg>
+                    Decanting
+                </a>
+                <a href="gem-cutting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l9 7-9 13L3 9l9-7z"/>
+                        <path d="M3 9h18"/>
+                    </svg>
+                    Gem Cutting
+                </a>
+                <a href="shops-to-ge.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l1-5h16l1 5"></path>
+                        <path d="M5 9v11h14V9"></path>
+                        <path d="M9 20v-6h6v6"></path>
+                    </svg>
+                    Shops to GE
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <div class="theme-toggle-label">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <span class="theme-toggle-mode-text">Light Mode</span>
+                    </div>
+                    <div class="theme-switch" id="themeSwitch"></div>
+                </div>
+                <a href="preferences.html" class="sidebar-settings-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1-.33H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .33-1V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.32.2.66.2 1s-.06.68-.2 1z"></path>
+                    </svg>
+                    Preferences
+                </a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <p class="page-intro text-secondary">Potion decanting: buy partial doses, combine into (4)-dose potions, sell. Columns show cost per 1/2/3-dose and approximate profit.</p>
+            <div class="search-filters">
+                <div class="search-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" placeholder="Search potions..." id="searchInput">
+                </div>
+            </div>
+            <div class="content-grid content-grid--full">
+                <div class="card decanting-card">
+                    <div class="decanting-table-scroll">
+                    <table class="market-table">
+                        <thead>
+                            <tr id="decantTableHeadRow">
+                                <th class="market-table__th-item market-table__th-sortable" data-sort="potion">Potion</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="dose1Cost">Dose (1) Cost</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="dose2Cost">Dose (2) Cost</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="dose3Cost">Dose (3) Cost</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="cheapestDose">Cheapest dose</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="cheapestCost">Cheapest cost</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="approxSellPrice">Approx. Sell Price</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="approxProfit">Approx. Profit</th>
+                                <th class="market-table__th-num text-right market-table__th-sortable" data-sort="theorizedLimit">Theorized Limit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="decantTableBody">
+                            <tr><td colspan="9" class="text-muted">Loading…</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <footer class="copyright">Copyright &copy; 2026 Flipwise by MinMax Technology</footer>
+        </main>
+    </div>
+    <script src="js/sidebar-clock.js"></script>
+    <script src="js/flipwise-data.js"></script>
+    <script src="js/flipwise-api.js"></script>
+    <script src="js/flipwise-ui.js"></script>
+    <script>
+(function() {
+  var tbody = document.getElementById('decantTableBody');
+  var headRow = document.getElementById('decantTableHeadRow');
+  var searchInput = document.getElementById('searchInput');
+  var sortColumn = 'approxProfit';
+  var sortDir = 'desc';
+  var WIKI_ICON_BASE = 'https://oldschool.runescape.wiki/images/';
+  var tableData = null;
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    var div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+  function fmtNum(n) {
+    if (n == null || isNaN(n)) return '—';
+    return Number(n).toLocaleString();
+  }
+  function fmtCost(n, uncertain) {
+    if (n == null || isNaN(n)) return '—';
+    var s = Number(n).toLocaleString();
+    return uncertain ? s + ' ?' : s;
+  }
+  function fmtProfit(n) {
+    if (n == null) return '—';
+    var s = (n >= 0 ? '+' : '') + Number(n).toLocaleString();
+    return s;
+  }
+  function iconHtml(icon, fallback) {
+    if (icon) {
+      var filename = String(icon).replace(/ /g, '_');
+      var url = WIKI_ICON_BASE + encodeURIComponent(filename);
+      return '<img src="' + escapeHtml(url) + '" alt="" class="item-icon" loading="lazy" referrerpolicy="no-referrer" data-fallback="' + escapeHtml(fallback || '') + '" onerror="var f=this.getAttribute(\'data-fallback\')||\'?\'; var s=document.createElement(\'span\'); s.className=\'item-icon-fallback\'; s.textContent=f; this.parentNode.replaceChild(s,this);">';
+    }
+    return '<span class="item-icon-fallback">' + escapeHtml((fallback || '').charAt(0) || '?') + '</span>';
+  }
+  function getItems() {
+    var F = window.Flipwise;
+    return (F && F.DECANTING_ITEMS) ? F.DECANTING_ITEMS.slice() : [];
+  }
+  function fillTable() {
+    if (!tbody) return;
+    var list = getItems();
+    var data = tableData || {};
+    var q = (searchInput && searchInput.value) ? searchInput.value.trim().toLowerCase() : '';
+    if (q) list = list.filter(function(it) { return (it.name || '').toLowerCase().indexOf(q) >= 0; });
+    list.sort(function(a, b) {
+      var dA = data[a.name];
+      var dB = data[b.name];
+      if (sortColumn === 'potion') {
+        var sa = (a.name || '').toLowerCase();
+        var sb = (b.name || '').toLowerCase();
+        var cmp = sa < sb ? -1 : sa > sb ? 1 : 0;
+        return sortDir === 'asc' ? cmp : -cmp;
+      }
+      var va = dA && dA[sortColumn] != null ? dA[sortColumn] : (sortColumn === 'approxProfit' || sortColumn === 'theorizedLimit' ? -Infinity : 0);
+      var vb = dB && dB[sortColumn] != null ? dB[sortColumn] : (sortColumn === 'approxProfit' || sortColumn === 'theorizedLimit' ? -Infinity : 0);
+      if (typeof va === 'number' && typeof vb === 'number')
+        return sortDir === 'asc' ? (va - vb) : (vb - va);
+      return 0;
+    });
+    tbody.innerHTML = '';
+    if (list.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="text-muted">' + (q ? 'No potions match your search.' : 'No data.') + '</td></tr>';
+      setSortIndicator();
+      return;
+    }
+    list.forEach(function(it) {
+      var d = data[it.name] || {};
+      var dose1 = fmtCost(d.dose1Cost, d.dose1Uncertain);
+      var dose2 = fmtCost(d.dose2Cost, d.dose2Uncertain);
+      var dose3 = fmtCost(d.dose3Cost, d.dose3Uncertain);
+      var cheapestDose = d.cheapestDose != null ? String(d.cheapestDose) : '—';
+      var cheapestCost = d.cheapestCost != null ? fmtNum(d.cheapestCost) : '—';
+      var sellPrice = d.approxSellPrice != null ? fmtNum(d.approxSellPrice) : '—';
+      var profit = d.approxProfit != null ? fmtProfit(d.approxProfit) : '—';
+      var profitClass = (d.approxProfit != null && d.approxProfit < 0) ? ' negative' : (d.approxProfit != null && d.approxProfit > 0) ? ' positive' : '';
+      var theorizedLimitStr = d.theorizedLimit != null ? fmtProfit(d.theorizedLimit) : '—';
+      var theorizedLimitClass = (d.theorizedLimit != null && d.theorizedLimit < 0) ? ' negative' : (d.theorizedLimit != null && d.theorizedLimit > 0) ? ' positive' : '';
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td class="market-table__td-item"><div class="coin-cell"><span class="coin-icon">' + iconHtml(d.icon, it.name) + '</span><span class="coin-name">' + escapeHtml(it.name) + '</span></div></td>' +
+        '<td class="text-right market-table__td-num">' + escapeHtml(dose1) + '</td>' +
+        '<td class="text-right market-table__td-num">' + escapeHtml(dose2) + '</td>' +
+        '<td class="text-right market-table__td-num">' + escapeHtml(dose3) + '</td>' +
+        '<td class="text-right market-table__td-num">' + escapeHtml(cheapestDose) + '</td>' +
+        '<td class="text-right market-table__td-num">' + escapeHtml(cheapestCost) + '</td>' +
+        '<td class="text-right market-table__td-num">' + escapeHtml(sellPrice) + '</td>' +
+        '<td class="text-right market-table__td-num change-cell' + profitClass + '">' + escapeHtml(profit) + '</td>' +
+        '<td class="text-right market-table__td-num change-cell' + theorizedLimitClass + '">' + escapeHtml(theorizedLimitStr) + '</td>';
+      tbody.appendChild(tr);
+    });
+    setSortIndicator();
+  }
+  function setSortIndicator() {
+    if (!headRow) return;
+    headRow.querySelectorAll('th[data-sort]').forEach(function(th) {
+      var col = th.getAttribute('data-sort');
+      th.classList.remove('sort-asc', 'sort-desc');
+      if (col === sortColumn) th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+    });
+  }
+  if (headRow) {
+    headRow.querySelectorAll('th[data-sort]').forEach(function(th) {
+      th.addEventListener('click', function() {
+        var col = th.getAttribute('data-sort');
+        if (col === sortColumn) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        else { sortColumn = col; sortDir = col === 'potion' ? 'asc' : (col === 'approxProfit' || col === 'theorizedLimit' ? 'desc' : 'asc'); }
+        fillTable();
+      });
+    });
+  }
+  if (searchInput) searchInput.addEventListener('input', fillTable);
+  if (typeof FlipwiseAPI !== 'undefined') {
+    FlipwiseAPI.refresh().then(function(data) {
+      tableData = data.decantingData || {};
+      fillTable();
+    }).catch(function() {
+      tableData = {};
+      fillTable();
+    });
+  } else {
+    tableData = {};
+    fillTable();
+  }
+})();
+    </script>
+</body>
+</html>

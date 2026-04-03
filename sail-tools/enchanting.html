@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="copper" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchanting - Flipwise</title>
+    <script>
+        (function() {
+            try {
+                var p = localStorage.getItem('themePalette') || 'copper';
+                var m = localStorage.getItem('themeMode') || localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', p);
+                document.documentElement.setAttribute('data-mode', m);
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/flipwise-theme.css">
+    <link rel="stylesheet" href="css/flipwise-themes.css">
+    <link rel="stylesheet" href="css/flipwise-pages.css">
+</head>
+<body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-time">
+                <div class="sidebar-time-label">Last refreshed</div>
+                <div class="sidebar-time-clock" id="refresh-clock">—</div>
+                <div class="sidebar-time-sub" id="refresh-last">—</div>
+                <div class="sidebar-time-actions">
+                    <button type="button" class="sidebar-time-btn" id="refresh-btn" title="Refresh">Refresh</button>
+                    <label class="sidebar-time-auto">
+                        <input type="checkbox" id="auto-refresh-checkbox" checked>
+                        <span>Auto (15s)</span>
+                    </label>
+                </div>
+            </div>
+            <nav class="nav-section">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="markets.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                    Markets
+                </a>
+                <a href="scanner.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Trade Scanner
+                </a>
+                <a href="money-makers.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Unusual Methods
+                </a>
+                <a href="enchanting.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M6 18l2-2 2 2 2-2 2 2"/>
+                    </svg>
+                    Enchanting
+                </a>
+                <a href="outfit-sets.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="8" height="6" rx="1"/><rect x="13" y="14" width="8" height="6" rx="1"/>
+                    </svg>
+                    Outfit Sets
+                </a>
+                <a href="tree-saplings.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22v-8M12 14c-2-2-5-3-8-2-1 3-1 6 2 8M12 14c2-2 5-3 8-2 1 3 1 6-2 8M12 8c-2-1-4-1-6 0-1 2 0 4 2 5M12 8c2-1 4-1 6 0 1 2 0 4-2 5"/>
+                    </svg>
+                    Tree Saplings
+                </a>
+                <a href="decanting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2h6v2l1.5 16h-9L9 4V2z"/>
+                    </svg>
+                    Decanting
+                </a>
+                <a href="gem-cutting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l9 7-9 13L3 9l9-7z"/>
+                        <path d="M3 9h18"/>
+                    </svg>
+                    Gem Cutting
+                </a>
+                <a href="shops-to-ge.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l1-5h16l1 5"></path>
+                        <path d="M5 9v11h14V9"></path>
+                        <path d="M9 20v-6h6v6"></path>
+                    </svg>
+                    Shops to GE
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <div class="theme-toggle-label">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <span class="theme-toggle-mode-text">Light Mode</span>
+                    </div>
+                    <div class="theme-switch" id="themeSwitch"></div>
+                </div>
+                <a href="preferences.html" class="sidebar-settings-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1-.33H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .33-1V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.32.2.66.2 1s-.06.68-.2 1z"></path>
+                    </svg>
+                    Preferences
+                </a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="balance-cards" id="enchantingTiles">
+                <!-- Filled by script -->
+                <div class="balance-card"><div class="balance-label">Loading…</div><div class="balance-value">—</div><div class="balance-change">—</div></div>
+            </div>
+            <footer class="copyright">Copyright &copy; 2026 Flipwise by MinMax Technology</footer>
+        </main>
+    </div>
+    <script src="js/flipwise-data.js"></script>
+    <script src="js/flipwise-api.js"></script>
+    <script src="js/sidebar-clock.js"></script>
+    <script>
+(function() {
+  var refreshBtn = document.getElementById('refresh-btn');
+  var container = document.getElementById('enchantingTiles');
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    var div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  function formatValue(profit) {
+    if (profit == null || profit === 0) return '—';
+    var n = Number(profit);
+    return (n >= 0 ? '+' : '') + n.toLocaleString() + ' gp';
+  }
+
+  function fmtNum(n) {
+    if (n == null || isNaN(n)) return '—';
+    return Number(n).toLocaleString();
+  }
+
+  var WIKI_ICON_BASE = 'https://oldschool.runescape.wiki/images/';
+  function iconImg(icon) {
+    if (!icon) return '';
+    var filename = String(icon).replace(/ /g, '_');
+    var url = WIKI_ICON_BASE + encodeURIComponent(filename);
+    return '<img class="mm-item-icon" src="' + escapeHtml(url) + '" alt="">';
+  }
+
+  function buildBreakdownHtml(t) {
+    var b = t.breakdown;
+    if (!b) return '';
+    var html = [];
+    if (b.materials && b.materials.length) {
+      b.materials.forEach(function(m) {
+        var label = escapeHtml(m.name) + (m.qty > 1 ? ' × ' + m.qty : '') + ': ';
+        var val = fmtNum(m.cost) + ' gp';
+        var icon = iconImg(m.icon);
+        html.push('<div class="mm-row"><span class="mm-row-left">' + icon + '<span class="mm-label">' + label + '</span></span><span class="mm-val">' + val + '</span></div>');
+      });
+      html.push('<div class="mm-divider"></div>');
+      html.push('<div class="mm-row"><span class="mm-label"><strong>Total cost:</strong> </span><span class="mm-val">' + fmtNum(b.total_cost) + ' gp</span></div>');
+      var productIcon = iconImg(b.product_icon);
+      html.push('<div class="mm-row"><span class="mm-row-left">' + productIcon + '<span class="mm-label"><strong>' + escapeHtml(b.product_name || '') + ':</strong> </span></span><span class="mm-val">' + fmtNum(b.product_value) + ' gp</span></div>');
+      var profitClass = (b.profit_before_tax != null && b.profit_before_tax < 0) ? ' mm-row mm-negative' : ' mm-row';
+      html.push('<div class="' + profitClass + '"><span class="mm-label"><strong>Profit:</strong> </span><span class="mm-val">' + (b.profit_before_tax != null ? (b.profit_before_tax >= 0 ? '+' : '') + fmtNum(b.profit_before_tax) + ' gp' : '—') + '</span></div>');
+      html.push('<div class="mm-row"><span class="mm-label"><strong>Tax:</strong> </span><span class="mm-val">' + (b.tax != null ? fmtNum(b.tax) + ' gp' : '—') + '</span></div>');
+      var afterTaxClass = (b.profit_after_tax != null && b.profit_after_tax < 0) ? ' mm-row mm-negative' : ' mm-row';
+      html.push('<div class="' + afterTaxClass + '"><span class="mm-label"><strong>Profit after GE Tax:</strong> </span><span class="mm-val">' + (b.profit_after_tax != null ? (b.profit_after_tax >= 0 ? '+' : '') + fmtNum(b.profit_after_tax) + ' gp' : '—') + '</span></div>');
+    } else if (b.rows && b.rows.length) {
+      b.rows.forEach(function(r) {
+        var rowClass = ' mm-row';
+        if (r.winner) rowClass += ' mm-winner';
+        if (r.profit != null && r.profit < 0) rowClass += ' mm-negative';
+        var label = escapeHtml(r.label || '');
+        var val = r.value != null ? escapeHtml(String(r.value)) : '—';
+        html.push('<div class="' + rowClass + '"><span class="mm-label">' + label + '</span><span class="mm-val">' + val + '</span></div>');
+      });
+    }
+    if (html.length === 0) return '';
+    return '<div class="mm-tile-breakdown">' + html.join('') + '</div>';
+  }
+
+  function renderTiles(tiles, bestKey) {
+    if (!container) return;
+    container.innerHTML = '';
+    if (!tiles || tiles.length === 0) {
+      container.innerHTML = '<div class="balance-card mm-tile"><div class="mm-tile-title">No data</div><div class="mm-tile-breakdown"></div><div class="mm-tile-profit">—</div></div>';
+      return;
+    }
+    tiles.forEach(function(t) {
+      var isPrimary = bestKey && t.key === bestKey && t.profit > 0;
+      var card = document.createElement('div');
+      card.className = 'balance-card mm-tile' + (isPrimary ? ' primary' : '');
+      var valueStr = t.profit > 0 ? formatValue(t.profit) : (t.profit < 0 ? formatValue(t.profit) : 'Inactive');
+      if (t.profit === 0) valueStr = 'Inactive';
+      var profitClass = 'mm-tile-profit' + (t.profit < 0 ? ' negative' : '');
+      var breakdownHtml = buildBreakdownHtml(t);
+      card.innerHTML =
+        '<div class="mm-tile-title">' + escapeHtml(t.title) + '</div>' +
+        breakdownHtml +
+        '<div class="' + profitClass + '">' + escapeHtml(valueStr) + '</div>';
+      container.appendChild(card);
+    });
+  }
+
+  function doRefresh() {
+    if (refreshBtn) refreshBtn.disabled = true;
+    if (typeof FlipwiseAPI === 'undefined') {
+      renderTiles([], null);
+      if (refreshBtn) refreshBtn.disabled = false;
+      return;
+    }
+    FlipwiseAPI.refresh().then(function(data) {
+      var tiles = data.enchantingTiles || [];
+      var bestKey = data.enchantingBestKey || null;
+      renderTiles(tiles, bestKey);
+      var t = Date.now();
+      try {
+        localStorage.setItem('flipwise-last-refresh-ts', String(t));
+        sessionStorage.setItem('flipwise-last-refresh-ts', String(t));
+      } catch (e) {}
+    }).catch(function() {
+      renderTiles([], null);
+    }).finally(function() {
+      if (refreshBtn) refreshBtn.disabled = false;
+    });
+  }
+
+  if (refreshBtn) refreshBtn.addEventListener('click', doRefresh);
+  doRefresh();
+})();
+    </script>
+    <script src="js/flipwise-ui.js"></script>
+</body>
+</html>

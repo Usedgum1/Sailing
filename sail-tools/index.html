@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="copper" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipwise</title>
+    <script>
+        (function() {
+            try {
+                var p = localStorage.getItem('themePalette') || 'copper';
+                var m = localStorage.getItem('themeMode') || localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', p);
+                document.documentElement.setAttribute('data-mode', m);
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/flipwise-theme.css">
+    <link rel="stylesheet" href="css/flipwise-themes.css">
+    <link rel="stylesheet" href="css/flipwise-dashboard.css">
+    <!--
+
+Flipwise dashboard shell
+
+-->
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-time">
+                <div class="sidebar-time-label">Last refreshed</div>
+                <div class="sidebar-time-clock" id="refresh-clock">—</div>
+                <div class="sidebar-time-sub" id="refresh-last">—</div>
+                <div class="sidebar-time-actions">
+                    <button type="button" class="sidebar-time-btn" id="refresh-btn" title="Refresh">Refresh</button>
+                    <label class="sidebar-time-auto">
+                        <input type="checkbox" id="auto-refresh-checkbox" checked>
+                        <span>Auto (15s)</span>
+                    </label>
+                </div>
+            </div>
+
+            <nav class="nav-section">
+                <a href="index.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="markets.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                    Markets
+                </a>
+                <a href="scanner.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Trade Scanner
+                </a>
+                <a href="money-makers.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Unusual Methods
+                </a>
+                <a href="enchanting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M6 18l2-2 2 2 2-2 2 2"/>
+                    </svg>
+                    Enchanting
+                </a>
+                <a href="outfit-sets.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="8" height="6" rx="1"/><rect x="13" y="14" width="8" height="6" rx="1"/>
+                    </svg>
+                    Outfit Sets
+                </a>
+                <a href="tree-saplings.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22v-8M12 14c-2-2-5-3-8-2-1 3-1 6 2 8M12 14c2-2 5-3 8-2 1 3 1 6-2 8M12 8c-2-1-4-1-6 0-1 2 0 4 2 5M12 8c2-1 4-1 6 0 1 2 0 4-2 5"/>
+                    </svg>
+                    Tree Saplings
+                </a>
+                <a href="decanting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 2h6v2l1.5 16h-9L9 4V2z"/>
+                    </svg>
+                    Decanting
+                </a>
+                <a href="gem-cutting.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l9 7-9 13L3 9l9-7z"/>
+                        <path d="M3 9h18"/>
+                    </svg>
+                    Gem Cutting
+                </a>
+                <a href="shops-to-ge.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l1-5h16l1 5"></path>
+                        <path d="M5 9v11h14V9"></path>
+                        <path d="M9 20v-6h6v6"></path>
+                    </svg>
+                    Shops to GE
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <div class="theme-toggle-label">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <span class="theme-toggle-mode-text">Light Mode</span>
+                    </div>
+                    <div class="theme-switch" id="themeSwitch"></div>
+                </div>
+                <a href="preferences.html" class="sidebar-settings-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1-.33H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .33-1V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.32.2.66.2 1s-.06.68-.2 1z"></path>
+                    </svg>
+                    Preferences
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>Flipwise</h1>
+                </div>
+            </div>
+
+            <!-- Content Wrapper: Best Op | Flips/Flops -->
+            <div class="content-wrapper dashboard-main-row">
+                <!-- Best Opportunity -->
+                <div class="card transactions-card" id="bestOpportunityCard">
+                    <div class="card-header">
+                        <h2 class="card-title">Best Opportunity</h2>
+                    </div>
+                    <div class="transactions-list" id="bestOpportunityList">
+                        <div class="best-opportunity-placeholder text-muted">Loading…</div>
+                    </div>
+                </div>
+
+                <!-- Flips and Flops -->
+                <div class="card movers-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Flips and Flops</h2>
+                        <div class="movers-tabs">
+                            <button class="movers-tab active">Gainers</button>
+                            <button class="movers-tab">Losers</button>
+                        </div>
+                    </div>
+                    <div class="movers-list" id="moversList">
+                        <div class="movers-placeholder text-muted">Loading market data…</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events row (full width) -->
+            <div class="transactions-row">
+                <div class="card events-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Events</h2>
+                        <button type="button" class="events-clear-btn" id="eventsClearBtn">Clear</button>
+                    </div>
+                    <div class="events-log" id="eventsLog">
+                        <div class="events-placeholder text-muted">Alert events will appear here.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <footer class="copyright">
+                Copyright &copy; 2026 Flipwise by MinMax Technology
+            </footer>
+        </main>
+    </div>
+
+    <script src="js/flipwise-data.js"></script>
+    <script src="js/flipwise-sounds.js"></script>
+    <script src="js/flipwise-alerts.js"></script>
+    <script src="js/flipwise-api.js"></script>
+    <script src="js/sidebar-clock.js"></script>
+    <script>
+      (function() {
+        var WIKI_ICON_BASE = 'https://oldschool.runescape.wiki/images/';
+        function escapeHtml(s) {
+          if (s == null) return '';
+          var div = document.createElement('div');
+          div.textContent = s;
+          return div.innerHTML;
+        }
+        function itemIconHtml(d, fallbackLetter) {
+          var letter = (fallbackLetter || (d && (d.name || '').charAt(0)) || '').charAt(0) || '?';
+          if (d && d.icon) {
+            var filename = String(d.icon).replace(/ /g, '_');
+            var url = WIKI_ICON_BASE + encodeURIComponent(filename);
+            return '<img src="' + escapeHtml(url) + '" alt="" class="item-icon" loading="lazy" referrerpolicy="no-referrer" data-fallback="' + escapeHtml(letter) + '" onerror="var f=this.getAttribute(\'data-fallback\')||\'?\'; var s=document.createElement(\'span\'); s.className=\'item-icon-fallback\'; s.textContent=f; this.parentNode.replaceChild(s,this);">';
+          }
+          return '<span class="item-icon-fallback">' + escapeHtml(letter) + '</span>';
+        }
+        function fmtProfit(gp) {
+          if (gp == null || gp !== gp) return '—';
+          var n = Number(gp);
+          var sign = n >= 0 ? '+' : '';
+          return sign + (n >= 0 ? n : -n).toLocaleString() + ' gp';
+        }
+        /** Trend level from profit using same thresholds as Python: -3..3 (3 up = 5M+, 3 down = -5M-). */
+        function getTrendLevel(profit) {
+          if (profit == null || profit !== profit) return 0;
+          var F = window.Flipwise;
+          var neutralMin = F && F.TREND_NEUTRAL_MIN != null ? F.TREND_NEUTRAL_MIN : -500000;
+          var neutralMax = F && F.TREND_NEUTRAL_MAX != null ? F.TREND_NEUTRAL_MAX : 500000;
+          var smallUp = F && F.TREND_SMALL_UP != null ? F.TREND_SMALL_UP : 2000000;
+          var mediumUp = F && F.TREND_MEDIUM_UP != null ? F.TREND_MEDIUM_UP : 5000000;
+          if (profit >= neutralMin && profit <= neutralMax) return 0;
+          if (profit > neutralMax) return profit < smallUp ? 1 : (profit < mediumUp ? 2 : 3);
+          return profit > -smallUp ? -1 : (profit > -mediumUp ? -2 : -3);
+        }
+        /** When an item crosses into 3-up (profit >= 10M) or 3-down (profit <= -10M), log to Events only (no tray). */
+        var lastTrendState = window._lastTrendState || {};
+        function checkTrendAlerts(allItems) {
+          if (!allItems || !allItems.length) return;
+          for (var i = 0; i < allItems.length; i++) {
+            var it = allItems[i];
+            var name = it.name;
+            var level = getTrendLevel(it.profit);
+            var prev = lastTrendState[name];
+            lastTrendState[name] = level;
+            if (level !== 3 && level !== -3) continue;
+            if (prev === level) continue;
+            var msg = name + ' is ' + (level === 3 ? 'trending upwards!' : 'trending down!');
+            if (window.FlipwiseAlerts && window.FlipwiseAlerts.appendEvent) {
+              window.FlipwiseAlerts.appendEvent(msg, level === 3 ? 'surge' : 'crash');
+            }
+            if (window.FlipwiseSounds) {
+              if (level === 3) window.FlipwiseSounds.playTrendUp();
+              else window.FlipwiseSounds.playTrendDown();
+            }
+            if (typeof renderEvents === 'function') renderEvents();
+          }
+          window._lastTrendState = lastTrendState;
+        }
+        function buildMoversLists(data) {
+          var list = [];
+          function add(name, d, profit) {
+            if (profit == null || profit !== profit) return;
+            list.push({ name: name, profit: profit, icon: d && d.icon });
+          }
+          var itemData = data.itemData || {};
+          var thirdAgeData = data.thirdAgeData || {};
+          var runesData = data.runesData || {};
+          var herbloreData = data.herbloreData || {};
+          Object.keys(itemData).forEach(function(name) { add(name, itemData[name], itemData[name].profit); });
+          Object.keys(thirdAgeData).forEach(function(name) { add(name, thirdAgeData[name], thirdAgeData[name].profit); });
+          Object.keys(runesData).forEach(function(name) { add(name, runesData[name], runesData[name].profitLimit); });
+          Object.keys(herbloreData).forEach(function(name) { add(name, herbloreData[name], herbloreData[name].profitLimit); });
+          list.sort(function(a, b) { return b.profit - a.profit; });
+          var top5 = list.slice(0, 5);
+          var bottom5 = list.slice(-5).reverse();
+          return { gainers: top5, losers: bottom5, all: list };
+        }
+        var lastMoversData = null;
+        function renderMoversList(items, isGainers) {
+          var container = document.getElementById('moversList');
+          if (!container) return;
+          if (!items || items.length === 0) {
+            container.innerHTML = '<div class="movers-placeholder text-muted">No market data.</div>';
+            return;
+          }
+          var html = items.map(function(it, i) {
+            var d = { icon: it.icon, name: it.name };
+            var letter = (it.name || '').charAt(0) || '?';
+            var profitClass = it.profit >= 0 ? 'positive' : 'negative';
+            return '<div class="mover-item">' +
+              '<div class="mover-rank">' + (i + 1) + '</div>' +
+              '<div class="mover-coin">' +
+                '<div class="coin-icon">' + itemIconHtml(d, letter) + '</div>' +
+                '<div class="coin-info">' +
+                  '<span class="coin-name">' + escapeHtml(it.name) + '</span>' +
+                '</div>' +
+              '</div>' +
+              '<div class="mover-data">' +
+                '<span class="mover-change ' + profitClass + '">' + escapeHtml(fmtProfit(it.profit)) + '</span>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+          container.innerHTML = html;
+        }
+        function updateTopMovers(data) {
+          lastMoversData = data;
+          var lists = data ? buildMoversLists(data) : { gainers: [], losers: [], all: [] };
+          if (lists.all && lists.all.length) checkTrendAlerts(lists.all);
+          var tabs = document.querySelectorAll('.movers-card .movers-tab');
+          var isGainers = true;
+          for (var i = 0; i < tabs.length; i++) {
+            if (tabs[i].classList.contains('active')) {
+              isGainers = (tabs[i].textContent || '').toLowerCase().indexOf('gainer') !== -1;
+              break;
+            }
+          }
+          renderMoversList(isGainers ? lists.gainers : lists.losers, isGainers);
+        }
+        function getMoneyMakerIcon(tile) {
+          var b = tile && tile.breakdown;
+          if (!b) return null;
+          return b.cannon_icon || b.ward_icon || b.ge_sell_icon || b.ge_buy_icon || b.product_icon || (b.part_icons && b.part_icons[0]) || null;
+        }
+        function buildBestOpportunities(data) {
+          var candidates = [];
+          if (!data) return candidates;
+          var mmTiles = data.moneyMakerTiles || [];
+          var mmBest = data.moneyMakerBestKey;
+          for (var i = 0; i < mmTiles.length; i++) {
+            if (mmTiles[i].key === mmBest && mmTiles[i].profit != null) {
+              candidates.push({
+                source: 'Unusual Methods',
+                title: mmTiles[i].title,
+                profit: mmTiles[i].profit,
+                unit: mmTiles[i].unit || 'gp',
+                href: 'money-makers.html',
+                icon: getMoneyMakerIcon(mmTiles[i])
+              });
+              break;
+            }
+          }
+          var encTiles = data.enchantingTiles || [];
+          var encBest = data.enchantingBestKey;
+          for (var j = 0; j < encTiles.length; j++) {
+            if (encTiles[j].key === encBest && encTiles[j].profit != null) {
+              var encB = encTiles[j].breakdown;
+              candidates.push({
+                source: 'Enchanting',
+                title: encTiles[j].title,
+                profit: encTiles[j].profit,
+                unit: 'gp',
+                href: 'enchanting.html',
+                icon: encB && encB.product_icon || null
+              });
+              break;
+            }
+          }
+          var outTiles = data.outfitSetTiles || [];
+          var outBest = data.outfitSetBestKey;
+          for (var k = 0; k < outTiles.length; k++) {
+            if (outTiles[k].key === outBest && outTiles[k].profit != null) {
+              var outB = outTiles[k].breakdown;
+              candidates.push({
+                source: 'Outfit Sets',
+                title: outTiles[k].title,
+                profit: outTiles[k].profit,
+                unit: 'gp',
+                href: 'outfit-sets.html',
+                icon: outB && outB.product_icon || null
+              });
+              break;
+            }
+          }
+          var saplings = data.treeSaplingsData || {};
+          var bestName = null;
+          var bestSaplingProfit = -1;
+          Object.keys(saplings).forEach(function(name) {
+            var s = saplings[name];
+            var p = s.limitProfit != null ? s.limitProfit : (s.profitPer != null ? s.profitPer : null);
+            if (p != null && p > bestSaplingProfit) {
+              bestSaplingProfit = p;
+              bestName = name;
+            }
+          });
+          if (bestName != null && bestSaplingProfit >= 0) {
+            var saplingRow = saplings[bestName];
+            candidates.push({
+              source: 'Tree Saplings',
+              title: bestName,
+              profit: bestSaplingProfit,
+              unit: 'gp',
+              href: 'tree-saplings.html',
+              icon: saplingRow && saplingRow.icon || null
+            });
+          }
+          var decanting = data.decantingData || {};
+          var bestDecantName = null;
+          var bestDecantProfit = -1;
+          Object.keys(decanting).forEach(function(name) {
+            var d = decanting[name];
+            var p = d.theorizedLimit != null ? d.theorizedLimit : (d.approxProfit != null ? d.approxProfit : null);
+            if (p != null && p > bestDecantProfit) {
+              bestDecantProfit = p;
+              bestDecantName = name;
+            }
+          });
+          if (bestDecantName != null && bestDecantProfit >= 0) {
+            var decantRow = decanting[bestDecantName];
+            candidates.push({
+              source: 'Decanting',
+              title: bestDecantName,
+              profit: bestDecantProfit,
+              unit: 'gp',
+              href: 'decanting.html',
+              icon: decantRow && decantRow.icon || null
+            });
+          }
+          candidates.sort(function(a, b) { return (b.profit || 0) - (a.profit || 0); });
+          return candidates;
+        }
+        function formatOpportunityProfit(profit, unit) {
+          if (profit == null || profit !== profit) return '—';
+          var n = Number(profit);
+          var sign = n >= 0 ? '+' : '';
+          var num = (n >= 0 ? n : -n).toLocaleString();
+          if (unit === 'gp/hr') return sign + num + ' gp/hr';
+          return sign + num + ' gp';
+        }
+        function updateBestOpportunity(data) {
+          var listEl = document.getElementById('bestOpportunityList');
+          if (!listEl) return;
+          var items = buildBestOpportunities(data);
+          if (!items || items.length === 0) {
+            listEl.innerHTML = '<div class="best-opportunity-placeholder text-muted">No opportunity data.</div>';
+            return;
+          }
+          var html = items.map(function(it) {
+            var profitStr = formatOpportunityProfit(it.profit, it.unit);
+            var profitClass = (it.profit || 0) >= 0 ? 'positive' : 'negative';
+            var iconD = { icon: it.icon, name: it.title };
+            var letter = (it.title || '').charAt(0) || '?';
+            return '<a href="' + escapeHtml(it.href) + '" class="transaction-item best-opportunity-item">' +
+              '<div class="opportunity-icon">' + itemIconHtml(iconD, letter) + '</div>' +
+              '<div class="transaction-details">' +
+                '<span class="transaction-title">' + escapeHtml(it.title) + '</span>' +
+                '<span class="transaction-date">' + escapeHtml(it.source) + '</span>' +
+              '</div>' +
+              '<div class="transaction-amount ' + profitClass + '">' + escapeHtml(profitStr) + '</div>' +
+            '</a>';
+          }).join('');
+          listEl.innerHTML = html;
+        }
+        function initMoversTabs() {
+          var card = document.querySelector('.movers-card');
+          if (!card) return;
+          var tabs = card.querySelectorAll('.movers-tab');
+          var listEl = document.getElementById('moversList');
+          for (var i = 0; i < tabs.length; i++) {
+            tabs[i].addEventListener('click', function() {
+              var isGainers = (this.textContent || '').toLowerCase().indexOf('gainer') !== -1;
+              card.querySelectorAll('.movers-tab').forEach(function(t) { t.classList.remove('active'); });
+              this.classList.add('active');
+              if (lastMoversData) {
+                var lists = buildMoversLists(lastMoversData);
+                renderMoversList(isGainers ? lists.gainers : lists.losers, isGainers);
+              }
+            });
+          }
+        }
+        function onDashboardRefresh(data) {
+          updateTopMovers(data);
+          updateBestOpportunity(data);
+        }
+        if (typeof window.FlipwiseAPI !== 'undefined') {
+          window.FlipwiseAPI.refresh().then(function(data) {
+            onDashboardRefresh(data);
+            initMoversTabs();
+          }).catch(function() {
+            var container = document.getElementById('moversList');
+            if (container) container.innerHTML = '<div class="movers-placeholder text-muted">Failed to load market data.</div>';
+            updateBestOpportunity(null);
+            initMoversTabs();
+          });
+        } else {
+          initMoversTabs();
+        }
+        window.FlipwiseDashboard = { onRefresh: onDashboardRefresh };
+        /* Auto-refresh every 15s when Auto is on; toggleable via sidebar checkbox */
+        var autoRefreshTimer = null;
+        function runAutoRefresh() {
+          if (typeof window.FlipwiseAPI === 'undefined') return;
+          window.FlipwiseAPI.refresh().then(function(data) {
+            var t = Date.now();
+            try {
+              localStorage.setItem('flipwise-last-refresh-ts', String(t));
+              sessionStorage.setItem('flipwise-last-refresh-ts', String(t));
+            } catch (e) {}
+            onDashboardRefresh(data);
+          });
+        }
+        function startDashboardAutoRefresh() {
+          if (autoRefreshTimer) return;
+          autoRefreshTimer = setInterval(runAutoRefresh, 15000);
+        }
+        function stopDashboardAutoRefresh() {
+          if (autoRefreshTimer) {
+            clearInterval(autoRefreshTimer);
+            autoRefreshTimer = null;
+          }
+        }
+        var autoCheckbox = document.getElementById('auto-refresh-checkbox');
+        if (autoCheckbox) {
+          autoCheckbox.addEventListener('change', function() {
+            if (autoCheckbox.checked) startDashboardAutoRefresh();
+            else stopDashboardAutoRefresh();
+          });
+          if (autoCheckbox.checked) startDashboardAutoRefresh();
+        }
+      })();
+    </script>
+    <script>
+      (function() {
+        if (window.FlipwiseSounds) {
+          window.FlipwiseSounds.playStartup();
+          setTimeout(function() { window.FlipwiseSounds.clearBootMute(); }, 3000);
+          (function oneTimeStartupOnInteraction() {
+            var done = false;
+            function run() {
+              if (done) return;
+              done = true;
+              if (window.FlipwiseSounds && window.FlipwiseSounds.playStartupOnceOnInteraction) {
+                window.FlipwiseSounds.playStartupOnceOnInteraction();
+              }
+              document.removeEventListener('click', run);
+              document.removeEventListener('keydown', run);
+            }
+            document.addEventListener('click', run, { once: true, capture: true });
+            document.addEventListener('keydown', run, { once: true, capture: true });
+          })();
+        }
+        function renderEvents() {
+          var container = document.getElementById('eventsLog');
+          if (!container) return;
+          var events = window.FlipwiseAlerts ? window.FlipwiseAlerts.getEvents() : [];
+          if (events.length === 0) {
+            container.innerHTML = '<div class="events-placeholder text-muted">Alert events will appear here.</div>';
+            return;
+          }
+          var tagToClass = { alert: 'events-icon-gold', 'alert-set': 'events-icon-gold', 'alert-clear': 'events-icon-white', 'alert-triggered': 'events-icon-gold', surge: 'events-icon-green', crash: 'events-icon-red', neutral: 'events-icon-white' };
+          var arrowUpSvg = '<svg class="events-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 12 12 5 19 12"/><line x1="12" y1="19" x2="12" y2="5"/></svg>';
+          var arrowDownSvg = '<svg class="events-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="19 12 12 19 5 12"/><line x1="12" y1="5" x2="12" y2="19"/></svg>';
+          var lockSvg = '<svg class="events-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><rect x="4" y="11" width="16" height="10" rx="2" ry="2"/></svg>';
+          var unlockSvg = '<svg class="events-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/><rect x="4" y="11" width="16" height="10" rx="2" ry="2"/></svg>';
+          container.innerHTML = events.map(function(ev) {
+            var tag = ev.tag || 'neutral';
+            var cls = tagToClass[tag] || 'events-icon-white';
+            var icon;
+            if (tag === 'surge') {
+              icon = '<span class="events-trend-icon events-trend-up">' + arrowUpSvg + '</span>';
+            } else if (tag === 'crash') {
+              icon = '<span class="events-trend-icon events-trend-down">' + arrowDownSvg + '</span>';
+            } else if (tag === 'alert-set' || tag === 'alert-triggered' || tag === 'alert') {
+              icon = '<span class="events-alert-icon events-alert-set">' + lockSvg + '</span>';
+            } else if (tag === 'alert-clear') {
+              icon = '<span class="events-alert-icon events-alert-clear">' + unlockSvg + '</span>';
+            } else {
+              icon = '\u2014 ';
+            }
+            return '<div class="events-line"><span class="' + cls + '">' + icon + '</span><span class="events-msg">' + escapeHtml(ev.line) + '</span></div>';
+          }).join('');
+        }
+        function escapeHtml(s) {
+          if (s == null) return '';
+          var div = document.createElement('div');
+          div.textContent = s;
+          return div.innerHTML;
+        }
+        renderEvents();
+        var clearBtn = document.getElementById('eventsClearBtn');
+        if (clearBtn && window.FlipwiseAlerts) {
+          clearBtn.addEventListener('click', function() {
+            window.FlipwiseAlerts.clearEvents();
+            renderEvents();
+          });
+        }
+      })();
+    </script>
+    <script src="js/flipwise-ui.js"></script>
+</body>
+</html>

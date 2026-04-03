@@ -1,0 +1,156 @@
+/*
+==========================================================================
+Flipwise - Theme Tokens
+Description: Alternate palette definitions layered on top of the core tokens
+==========================================================================
+*/
+
+/* Forest palette */
+[data-theme="forest"][data-mode="dark"] {
+    --bg-primary: #161d18;
+    --bg-secondary: #1d2620;
+    --bg-card: #243129;
+    --bg-card-hover: #2a3a31;
+    --accent-copper: #7ca678;
+    --accent-copper-light: #9dc498;
+    --accent-gradient: linear-gradient(135deg, #6d9368 0%, #88b283 50%, #9dc498 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #88b283 0%, #a8cfa3 50%, #b9ddb4 100%);
+    --accent-overlay-soft: rgba(124, 166, 120, 0.16);
+    --accent-overlay-strong: rgba(124, 166, 120, 0.22);
+    --accent-focus-ring: rgba(124, 166, 120, 0.2);
+    --accent-shadow-soft: rgba(124, 166, 120, 0.24);
+    --accent-shadow-medium: rgba(124, 166, 120, 0.3);
+    --text-primary: #edf4ed;
+    --text-secondary: #b1beb1;
+    --text-muted: #7e8b80;
+    --gain: #71b17a;
+    --gain-bright: #8dcb95;
+    --gain-strong: #5fbc70;
+    --loss: #cf7a7a;
+    --loss-bright: #e59a9a;
+    --loss-strong: #df6666;
+    --gain-overlay: rgba(113, 177, 122, 0.2);
+    --loss-overlay: rgba(207, 122, 122, 0.2);
+    --gain-overlay-strong: rgba(63, 93, 67, 0.65);
+    --loss-overlay-strong: rgba(102, 63, 63, 0.65);
+    --status-warning: #d0bc65;
+    --status-warning-bright: #dfc45d;
+    --status-warning-soft: #e2c96f;
+    --status-highlight-bg: rgba(28, 36, 30, 0.9);
+    --sentiment-gradient: linear-gradient(90deg, #cf7a7a, #d0bc65, #71b17a);
+    --border: #334036;
+    --shadow: rgba(0, 0, 0, 0.32);
+    --chart-grid: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="forest"][data-mode="light"] {
+    --bg-primary: #f2f7f1;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #edf4eb;
+    --accent-copper: #6f9d71;
+    --accent-copper-light: #97be98;
+    --accent-gradient: linear-gradient(135deg, #6f9d71 0%, #8eb590 50%, #a7cda8 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #8eb590 0%, #a7cda8 50%, #beddbf 100%);
+    --accent-overlay-soft: rgba(111, 157, 113, 0.12);
+    --accent-overlay-strong: rgba(111, 157, 113, 0.18);
+    --accent-focus-ring: rgba(111, 157, 113, 0.18);
+    --accent-shadow-soft: rgba(111, 157, 113, 0.22);
+    --accent-shadow-medium: rgba(111, 157, 113, 0.28);
+    --text-primary: #1b231c;
+    --text-secondary: #647166;
+    --text-muted: #8b968c;
+    --gain: #4e9657;
+    --gain-bright: #5ea868;
+    --gain-strong: #438b4b;
+    --loss: #cb7070;
+    --loss-bright: #d98484;
+    --loss-strong: #c75c5c;
+    --gain-overlay: rgba(78, 150, 87, 0.16);
+    --loss-overlay: rgba(203, 112, 112, 0.16);
+    --gain-overlay-strong: rgba(78, 150, 87, 0.22);
+    --loss-overlay-strong: rgba(203, 112, 112, 0.22);
+    --status-warning: #c1a94c;
+    --status-warning-bright: #c89f34;
+    --status-warning-soft: #d2ad3f;
+    --status-highlight-bg: rgba(27, 35, 28, 0.08);
+    --sentiment-gradient: linear-gradient(90deg, #cb7070, #d2ad3f, #4e9657);
+    --border: #d8e2d7;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --chart-grid: rgba(0, 0, 0, 0.05);
+}
+
+/* Ocean palette */
+[data-theme="ocean"][data-mode="dark"] {
+    --bg-primary: #131a22;
+    --bg-secondary: #192330;
+    --bg-card: #202c3a;
+    --bg-card-hover: #263646;
+    --accent-copper: #4f8fcf;
+    --accent-copper-light: #78addf;
+    --accent-gradient: linear-gradient(135deg, #3f79b8 0%, #5b96d6 50%, #78addf 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #5b96d6 0%, #7eb5e6 50%, #9ac7ee 100%);
+    --accent-overlay-soft: rgba(79, 143, 207, 0.16);
+    --accent-overlay-strong: rgba(79, 143, 207, 0.22);
+    --accent-focus-ring: rgba(79, 143, 207, 0.2);
+    --accent-shadow-soft: rgba(79, 143, 207, 0.24);
+    --accent-shadow-medium: rgba(79, 143, 207, 0.3);
+    --text-primary: #edf4fb;
+    --text-secondary: #b1c3d5;
+    --text-muted: #7f91a3;
+    --gain: #65b7a4;
+    --gain-bright: #82cbb9;
+    --gain-strong: #52c1a7;
+    --loss: #d68181;
+    --loss-bright: #e39e9e;
+    --loss-strong: #df6e6e;
+    --gain-overlay: rgba(101, 183, 164, 0.2);
+    --loss-overlay: rgba(214, 129, 129, 0.2);
+    --gain-overlay-strong: rgba(56, 92, 84, 0.65);
+    --loss-overlay-strong: rgba(104, 67, 67, 0.65);
+    --status-warning: #d7c265;
+    --status-warning-bright: #e0be55;
+    --status-warning-soft: #e5c96c;
+    --status-highlight-bg: rgba(20, 29, 40, 0.9);
+    --sentiment-gradient: linear-gradient(90deg, #d68181, #d7c265, #65b7a4);
+    --border: #304050;
+    --shadow: rgba(0, 0, 0, 0.34);
+    --chart-grid: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="ocean"][data-mode="light"] {
+    --bg-primary: #f2f7fc;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #edf4fb;
+    --accent-copper: #4f87c4;
+    --accent-copper-light: #79a9d8;
+    --accent-gradient: linear-gradient(135deg, #4f87c4 0%, #6a9fd5 50%, #88b7e4 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #6a9fd5 0%, #88b7e4 50%, #a4c9ee 100%);
+    --accent-overlay-soft: rgba(79, 135, 196, 0.12);
+    --accent-overlay-strong: rgba(79, 135, 196, 0.18);
+    --accent-focus-ring: rgba(79, 135, 196, 0.18);
+    --accent-shadow-soft: rgba(79, 135, 196, 0.22);
+    --accent-shadow-medium: rgba(79, 135, 196, 0.28);
+    --text-primary: #18202a;
+    --text-secondary: #60707f;
+    --text-muted: #8794a0;
+    --gain: #4fa08e;
+    --gain-bright: #60b3a1;
+    --gain-strong: #418d7d;
+    --loss: #cc7474;
+    --loss-bright: #d98686;
+    --loss-strong: #c86161;
+    --gain-overlay: rgba(79, 160, 142, 0.16);
+    --loss-overlay: rgba(204, 116, 116, 0.16);
+    --gain-overlay-strong: rgba(79, 160, 142, 0.22);
+    --loss-overlay-strong: rgba(204, 116, 116, 0.22);
+    --status-warning: #c5ab48;
+    --status-warning-bright: #cb9e2f;
+    --status-warning-soft: #d5b646;
+    --status-highlight-bg: rgba(24, 32, 42, 0.08);
+    --sentiment-gradient: linear-gradient(90deg, #cc7474, #d5b646, #4fa08e);
+    --border: #d7e2ec;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --chart-grid: rgba(0, 0, 0, 0.05);
+}
