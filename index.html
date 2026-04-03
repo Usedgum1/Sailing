@@ -1,0 +1,1191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HUB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="templatemo-nexaverse.css">
+
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader-ring"></div>
+        <div class="loading-text">Initializing Experience...</div>
+    </div>
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1 ambient-wander"></div>
+        <div class="orb orb-2 ambient-wander"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Grid Overlay -->
+    <div class="grid-overlay"></div>
+
+    <section class="login-shell" id="loginShell">
+        <div class="login-panel">
+            <div class="login-brand-mark">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="loginGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00f0ff"/>
+                            <stop offset="100%" style="stop-color:#ff00d4"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon points="50,5 95,30 95,70 50,95 5,70 5,30" fill="none" stroke="url(#loginGradient)" stroke-width="2"/>
+                    <polygon points="50,20 80,37 80,63 50,80 20,63 20,37" fill="none" stroke="url(#loginGradient)" stroke-width="1.5" opacity="0.6"/>
+                    <circle cx="50" cy="50" r="12" fill="url(#loginGradient)" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="6" fill="url(#loginGradient)"/>
+                </svg>
+            </div>
+            <div class="login-copy">
+                <p class="login-kicker">Secure Entry</p>
+                <h1>Enter The Hub</h1>
+                <p class="login-subtitle">Launch Sail through a dedicated access screen that matches the rest of the experience.</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <label class="login-field">
+                    <span>Operator</span>
+                    <input type="text" id="loginUsername" name="username" placeholder="Username" autocomplete="username" required>
+                </label>
+                <label class="login-field">
+                    <span>Passkey</span>
+                    <input type="password" id="loginPassword" name="password" placeholder="Password" autocomplete="current-password" required>
+                </label>
+                <div class="login-actions">
+                    <button type="submit" class="login-submit">Access Hub</button>
+                    <button type="button" class="login-clear" id="loginClear">Clear</button>
+                </div>
+                <p class="login-message" id="loginMessage">Enter any username and password to unlock this local session.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container is-gated" id="appShell" aria-hidden="true">
+        <!-- Header -->
+        <div class="header" id="mainHeader">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00f0ff"/>
+                            <stop offset="100%" style="stop-color:#ff00d4"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon points="50,5 95,30 95,70 50,95 5,70 5,30" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+                    <polygon points="50,20 80,37 80,63 50,80 20,63 20,37" fill="none" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                    <circle cx="50" cy="50" r="12" fill="url(#logoGradient)" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="6" fill="url(#logoGradient)"/>
+                </svg>
+            </div>
+            <h1 class="brand-name">THE HUB</h1>
+            <div class="brand-ip-status" id="brand-ip-status">
+                <span class="brand-ip-label">IP Status</span>
+                <span class="brand-ip-pill" id="brand-ip-pill">Checking...</span>
+            </div>
+            <button type="button" class="session-signout" id="sessionSignout">Sign Out</button>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menuGrid">
+            <div class="menu-item initial-load" data-section="sail">
+                <div class="menu-badge">SL</div>
+                <div class="menu-title">Sail</div>
+            </div>
+            <div class="menu-item initial-load" data-section="flipwise">
+                <div class="menu-badge">FW</div>
+                <div class="menu-title">FlipWise</div>
+            </div>
+            <div class="menu-item initial-load" data-section="ghostgif">
+                <div class="menu-badge">GG</div>
+                <div class="menu-title">GhostGIF</div>
+            </div>
+            <div class="menu-item initial-load" data-section="downloader">
+                <div class="menu-badge">DL</div>
+                <div class="menu-title">Downloader</div>
+            </div>
+            <div class="menu-item initial-load" data-section="about">
+                <div class="menu-badge">AB</div>
+                <div class="menu-title">About</div>
+            </div>
+            <div class="menu-item initial-load" data-section="contact">
+                <div class="menu-badge">CT</div>
+                <div class="menu-title">Contact</div>
+            </div>
+            <div class="menu-item initial-load" data-section="elite">
+                <div class="menu-badge">EL</div>
+                <div class="menu-title">Elite</div>
+            </div>
+            <div class="menu-item initial-load" data-section="gallery">
+                <div class="menu-badge">RG</div>
+                <div class="menu-title">Redgifs</div>
+            </div>
+            <div class="menu-item initial-load" data-section="testimonials">
+                <div class="menu-badge">RD</div>
+                <div class="menu-title">Reddit</div>
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div id="contentArea">
+            <!-- Sail Section -->
+            <div class="content-section" id="sail">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+                
+                <div class="section-header">
+                    <h2 class="section-title">Sail</h2>
+                    <p class="section-subtitle">A polished launch point for games, tools, and trusted links</p>
+                </div>
+
+                <section class="sail-panel sail-status-panel">
+                    <div class="sail-status-brand">
+                        <div>
+                            <p class="sail-panel-kicker">Live Status</p>
+                            <p class="sail-status-helper">Protected links are monitored</p>
+                        </div>
+                    </div>
+                    <div class="sail-status-meta">
+                        <span class="sail-panel-kicker">Current IP</span>
+                        <span class="small-brand-ip-pill sail-status-pill" id="small-brand-ip-pill">Checking...</span>
+                    </div>
+                </section>
+
+                <div class="sail-embed-grid">
+                    <section class="sail-panel sail-embed-panel">
+                        <div class="sail-panel-header">
+                            <div>
+                                <h3>FitGirl</h3>
+                            </div>
+                            <a href="https://fitgirl-repacks.site/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Open Site</a>
+                        </div>
+                        <div class="sail-embed-shell">
+                            <iframe src="https://fitgirl-repacks.site/" title="FitGirl Releases" loading="lazy"></iframe>
+                        </div>
+                    </section>
+
+                    <section class="sail-panel sail-embed-panel">
+                        <div class="sail-panel-header">
+                            <div>
+                                <h3>SteamRip</h3>
+                            </div>
+                            <a href="https://steamrip.com/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Open Site</a>
+                        </div>
+                        <div class="sail-embed-shell">
+                            <iframe src="https://steamrip.com/" title="SteamRip Updates" loading="lazy"></iframe>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="sail-tools-grid">
+                    <section class="sail-panel sail-tool-card sail-tool-card-wide">
+                        <p class="sail-panel-kicker">Search Tool</p>
+                        <h3>RAWG Game Search</h3>
+                        <p>Search a game title and pull quick release details, artwork, and screenshots without leaving Sail.</p>
+                        <form class="sail-search-form" id="game-search-form">
+                            <input type="text" id="game-search-input" placeholder="Search for a game" required>
+                            <button type="submit">Search</button>
+                            <button type="button" class="sail-search-reset" id="game-search-reset">Reset</button>
+                        </form>
+                        <div class="sail-search-result" id="game-search-result">
+                            <div class="sail-search-empty">Search results will appear here.</div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <section class="sail-panel sail-links-panel">
+                    <div class="sail-panel-header">
+                        <div>
+                            <p class="sail-panel-kicker">Curated Resources</p>
+                            <h3>Quick Access Links</h3>
+                        </div>
+                        <span class="sail-panel-note">Organized from the legacy sidebar</span>
+                    </div>
+
+                    <div class="sail-links-grid">
+                        <div class="sail-link-group">
+                            <h4>Computer</h4>
+                            <div class="sail-link-list">
+                                <a href="https://www.gog-games.to/" target="_blank" rel="noopener noreferrer" data-protected-link="true">GOG Games</a>
+                                <a href="https://www.cg-gamespc.com/" target="_blank" rel="noopener noreferrer" data-protected-link="true">CG Games PC</a>
+                                <a href="https://abandonwaregames.net/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Abandonware Games</a>
+                                <a href="https://gamepcfull.com/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Game PC Full</a>
+                                <a href="https://getfreegames.net/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Get Free Games</a>
+                                <a href="https://www.gamespack.net/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Games Pack</a>
+                                <a href="https://www.gamezdl.cc/" target="_blank" rel="noopener noreferrer" data-protected-link="true">GamezDL</a>
+                                <a href="https://www.ankergames.net/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Anker Games</a>
+                                <a href="https://fitgirl-repacks.site/" target="_blank" rel="noopener noreferrer" data-protected-link="true">FitGirl Repacks</a>
+                            </div>
+                        </div>
+
+                        <div class="sail-link-group">
+                            <h4>Android</h4>
+                            <div class="sail-link-list">
+                                <a href="https://apkmody.com/" target="_blank" rel="noopener noreferrer" data-protected-link="true">APKMODY</a>
+                                <a href="https://modyolo.com/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Modyolo</a>
+                            </div>
+                        </div>
+
+                        <div class="sail-link-group">
+                            <h4>Streaming</h4>
+                            <div class="sail-link-list">
+                                <a href="https://www.cineby.app/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Cineby</a>
+                                <a href="https://broflix.cc/" target="_blank" rel="noopener noreferrer" data-protected-link="true">BROFLIX</a>
+                                <a href="https://freek.to/" target="_blank" rel="noopener noreferrer" data-protected-link="true">FREEK</a>
+                                <a href="https://www.1shows.nl/" target="_blank" rel="noopener noreferrer" data-protected-link="true">1Shows</a>
+                            </div>
+                        </div>
+
+                        <div class="sail-link-group">
+                            <h4>Reddit</h4>
+                            <div class="sail-link-list">
+                                <a href="https://www.reddit.com/r/Piracy/wiki/megathread" target="_blank" rel="noopener noreferrer" data-protected-link="true">Piracy Megathread</a>
+                                <a href="https://www.reddit.com/" target="_blank" rel="noopener noreferrer" data-protected-link="true">Reddit Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Elite Section -->
+            <div class="content-section" id="elite">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad2)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad2)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">Elite</h2>
+                    <p class="section-subtitle">A dedicated embedded viewer built to drop your source in cleanly.</p>
+                </div>
+
+                <section class="elite-shell">
+                    <div class="elite-viewer-grid">
+                        <div class="elite-viewer-card">
+                            <div class="elite-frame-viewport">
+                                <iframe
+                                    id="elite-frame"
+                                    class="elite-frame"
+                                    title="Elite embedded viewer"
+                                    src="https://www.elitebabes.com/random/?sort=gallery&label=1">
+                                </iframe>
+                            </div>
+                        </div>
+
+                        <div class="elite-viewer-card">
+                            <div class="elite-frame-viewport">
+                                <iframe
+                                    id="elite-frame-secondary"
+                                    class="elite-frame"
+                                    title="Elite companion viewer"
+                                    src="https://www.elitebabes.com/random/?sort=gallery&label=1">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Gallery Section -->
+            <div class="content-section" id="gallery">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad3)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad3)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">Redgifs Viewer</h2>
+                    <p class="section-subtitle">Paste a Redgifs link and keep the viewing flow inside THE HUB.</p>
+                </div>
+
+                <div class="redgifs-layout">
+                    <section class="redgifs-panel redgifs-toolbar-card">
+                        <div class="redgifs-toolbar-copy">
+                            <p class="sail-panel-kicker">Embed Tool</p>
+                            <h3>Open a Redgifs page without leaving the site.</h3>
+                            <p>Paste a watch, user, or embed-style Redgifs URL. THE HUB will try the cleaner embedded route first and keep an open-direct fallback ready if the source resists framing.</p>
+                        </div>
+                        <form class="redgifs-form" id="redgifs-form">
+                            <input type="url" id="redgifs-input" class="redgifs-input" placeholder="https://www.redgifs.com/watch/..." autocomplete="off">
+                            <div class="redgifs-actions">
+                                <button type="submit" class="ghostgif-action">Load</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="redgifs-reset">Reset</button>
+                                <a class="flipwise-open-link" id="redgifs-open-direct" href="https://www.redgifs.com/" target="_blank" rel="noopener">Open Direct</a>
+                            </div>
+                        </form>
+                        <div class="redgifs-quick-row" id="redgifs-quick-row">
+                            <button type="button" class="redgifs-quick-chip" data-redgifs-url="https://www.redgifs.com/">Home</button>
+                        </div>
+                    </section>
+
+                    <section class="redgifs-panel redgifs-viewer-card">
+                        <div class="redgifs-frame-shell">
+                            <iframe
+                                id="redgifs-frame"
+                                class="redgifs-frame"
+                                title="Redgifs viewer"
+                                src="about:blank"
+                                loading="lazy">
+                            </iframe>
+                            <div class="redgifs-empty-state" id="redgifs-empty-state">
+                                <h4>Viewer ready</h4>
+                                <p>Load a Redgifs link above to try an in-Hub viewer. If the target blocks embedding, use `Open Direct` as the fallback.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+
+            <!-- Reddit Section -->
+            <div class="content-section" id="testimonials">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad4)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad4)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">Reddit Grid</h2>
+                    <p class="section-subtitle">A rotating set of safe image pulls styled like a cleaner version of the legacy Reddit panel.</p>
+                </div>
+
+                <div class="reddit-hub-toolbar">
+                    <div class="reddit-hub-copy">
+                        <p class="sail-panel-kicker">Live Pull</p>
+                        <h3>Safe random image refresh</h3>
+                        <p>Each tile pulls a fresh image from a curated list of non-explicit subreddits. Click any image to open it larger, or refresh the full grid when you want a new pass.</p>
+                    </div>
+                    <div class="reddit-hub-actions">
+                        <button type="button" class="ghostgif-action" id="reddit-refresh-btn">Refresh Grid</button>
+                    </div>
+                </div>
+
+                <div class="reddit-hub-grid" id="reddit-hub-grid">
+                    <div class="reddit-hub-card"><div class="flipwise-empty">Loading Reddit media...</div></div>
+                    <div class="reddit-hub-card"><div class="flipwise-empty">Loading Reddit media...</div></div>
+                    <div class="reddit-hub-card"><div class="flipwise-empty">Loading Reddit media...</div></div>
+                    <div class="reddit-hub-card"><div class="flipwise-empty">Loading Reddit media...</div></div>
+                    <div class="reddit-hub-card"><div class="flipwise-empty">Loading Reddit media...</div></div>
+                    <div class="reddit-hub-card"><div class="flipwise-empty">Loading Reddit media...</div></div>
+                </div>
+
+                <div class="reddit-lightbox" id="reddit-lightbox" aria-hidden="true">
+                    <button type="button" class="reddit-lightbox-close" id="reddit-lightbox-close">Close</button>
+                    <img id="reddit-lightbox-image" alt="Expanded Reddit media">
+                    <video id="reddit-lightbox-video" class="reddit-lightbox-video" controls playsinline hidden></video>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="content-section" id="about">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad5)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad5)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">About</h2>
+                    <p class="section-subtitle">The personal workspace behind THE HUB</p>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>One launcher, multiple real tools</h3>
+                        <p>THE HUB is a personal site built around tools that actually get used: game discovery, media handling, downloading workflows, embedded viewers, and OSRS flipping utilities.</p>
+                        <p>Instead of acting like a generic portfolio, it brings together the strongest ideas from older proof-of-concept pages and reshapes them into one cleaner, more polished home base.</p>
+                        <p>The goal is simple: keep the personality, keep the utility, and make each section feel intentional enough to live beside the others without turning into clutter.</p>
+                        
+                    </div>
+                    <div class="about-image">
+                        <img src="images/about-our-team.jpg" alt="Our Team">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="content-section" id="contact">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad6)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad6)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-subtitle">Direct links for reaching the person behind THE HUB</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message"></textarea>
+                        </div>
+                        <button class="submit-btn">Send Message</button>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">HQ</div>
+                            <div class="contact-details">
+                                <h4>Status</h4>
+                                <p>Personal project workspace based in the United States</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">@</div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p>contact@thehub.local</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">ID</div>
+                            <div class="contact-details">
+                                <h4>Focus</h4>
+                                <p>Custom tools, embedded viewers, and workflow dashboards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="ghostgif">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad7)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad7)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">GhostGIF</h2>
+                    <p class="section-subtitle">A browser-based port of your private local media viewer</p>
+                </div>
+
+                <div class="ghostgif-layout">
+                    <section class="ghostgif-hero glass-card">
+                        <div class="ghostgif-art">
+                            <img src="images/ghostgif.png" alt="GhostGIF icon">
+                        </div>
+                        <div class="ghostgif-copy">
+                            <p class="ghostgif-kicker">Live Tool</p>
+                            <h3>Load local video files and shuffle them privately.</h3>
+                            <p>This web version keeps the same core flow as the desktop launcher: add local sources, build a temporary in-memory library, and control playback with quick previous, next, mute, stop, and volume tools.</p>
+                            <div class="ghostgif-chip-row">
+                                <span class="ghostgif-chip">No History Focus</span>
+                                <span class="ghostgif-chip">Folder Shuffle</span>
+                                <span class="ghostgif-chip">In-Memory Playlist</span>
+                                <span class="ghostgif-chip">Quick Controls</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="ghostgif-workspace">
+                        <section class="sail-panel ghostgif-sources">
+                            <div class="sail-panel-header">
+                                <div>
+                                    <p class="sail-panel-kicker">Sources</p>
+                                    <h3>Local library</h3>
+                                </div>
+                                <span class="sail-panel-note" id="ghostgif-count-label">0 media files loaded</span>
+                            </div>
+
+                            <div class="ghostgif-source-actions">
+                                <button type="button" class="ghostgif-action" id="ghostgif-add-files">Add Files</button>
+                                <button type="button" class="ghostgif-action" id="ghostgif-add-folder">Add Folder</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="ghostgif-remove-current">Remove Current</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="ghostgif-clear">Clear All</button>
+                            </div>
+
+                            <input type="file" id="ghostgif-file-input" accept="video/*,image/*,.mp4,.m4v,.mov,.avi,.mkv,.webm,.ogg,.jpg,.jpeg,.png,.gif,.webp,.bmp,.avif" multiple hidden>
+                            <input type="file" id="ghostgif-folder-input" accept="video/*,image/*,.mp4,.m4v,.mov,.avi,.mkv,.webm,.ogg,.jpg,.jpeg,.png,.gif,.webp,.bmp,.avif" multiple webkitdirectory directory hidden>
+
+                            <div class="ghostgif-status" id="ghostgif-status">Browser session only. Nothing is saved after refresh.</div>
+
+                            <div class="ghostgif-library" id="ghostgif-library">
+                                <div class="ghostgif-empty">Add local files or a folder to start a session.</div>
+                            </div>
+                        </section>
+
+                        <section class="sail-panel ghostgif-player-panel">
+                            <div class="sail-panel-header">
+                                <div>
+                                    <p class="sail-panel-kicker">Viewer</p>
+                                    <h3>Playback</h3>
+                                </div>
+                                <span class="sail-panel-note" id="ghostgif-now-playing">Nothing playing</span>
+                            </div>
+
+                            <div class="ghostgif-player-shell">
+                                <video id="ghostgif-video" class="ghostgif-video" playsinline preload="metadata"></video>
+                                <img id="ghostgif-image" class="ghostgif-image is-hidden" alt="GhostGIF media preview">
+                                <button type="button" class="ghostgif-expand-hitbox is-hidden" id="ghostgif-expand-trigger" aria-label="Expand current GhostGIF media"></button>
+                                <div class="ghostgif-video-empty" id="ghostgif-video-empty">Start playback to view media here.</div>
+                            </div>
+
+                            <div class="ghostgif-controls">
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="ghostgif-previous">Previous</button>
+                                <button type="button" class="ghostgif-action" id="ghostgif-start">Start</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="ghostgif-next">Next</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="ghostgif-stop">Stop</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="ghostgif-mute">Mute</button>
+                            </div>
+
+                            <div class="ghostgif-volume-row">
+                                <label for="ghostgif-volume">Volume</label>
+                                <input type="range" id="ghostgif-volume" min="0" max="100" value="75">
+                                <span id="ghostgif-volume-label">75%</span>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="downloader">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad8)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad8)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">Downloader</h2>
+                    <p class="section-subtitle">A browser companion for your Vault download workflow</p>
+                </div>
+
+                <div class="downloader-layout">
+                    <section class="downloader-hero glass-card">
+                        <div class="downloader-art">
+                            <img src="images/downloader.png" alt="Downloader icon">
+                        </div>
+                        <div class="downloader-copy">
+                            <p class="ghostgif-kicker">Queue Builder</p>
+                            <h3>Manage links, favorites, and export commands fast.</h3>
+                            <p>This browser version mirrors the downloader workflow where it can: paste links, classify them, manage favorite Redgifs profiles, remember your preferred output folder, and generate ready-to-run command batches for your native tools.</p>
+                            <div class="ghostgif-chip-row">
+                                <span class="ghostgif-chip">Queue Parsing</span>
+                                <span class="ghostgif-chip">Favorites</span>
+                                <span class="ghostgif-chip">Command Export</span>
+                                <span class="ghostgif-chip">Local Session</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="downloader-workspace">
+                        <section class="sail-panel downloader-queue-panel">
+                            <div class="sail-panel-header">
+                                <div>
+                                    <p class="sail-panel-kicker">Links</p>
+                                    <h3>Paste queue</h3>
+                                </div>
+                                <span class="sail-panel-note" id="downloader-queue-count">0 links queued</span>
+                            </div>
+
+                            <textarea id="downloader-links" class="downloader-textarea" placeholder="Paste one link per line"></textarea>
+
+                            <div class="downloader-actions">
+                                <button type="button" class="ghostgif-action" id="downloader-copy-commands">Copy Commands</button>
+                                <button type="button" class="ghostgif-action" id="downloader-export-bat">Export .bat</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="downloader-open-links">Open Links</button>
+                                <button type="button" class="ghostgif-action ghostgif-action-secondary" id="downloader-clear-links">Clear</button>
+                            </div>
+
+                            <div class="ghostgif-status" id="downloader-status">Browser companion mode. Native download tools still run outside the browser.</div>
+                        </section>
+
+                        <div class="downloader-side-grid">
+                            <section class="sail-panel downloader-card">
+                                <div class="sail-panel-header">
+                                    <div>
+                                        <p class="sail-panel-kicker">Favorites</p>
+                                        <h3>Profiles</h3>
+                                    </div>
+                                </div>
+
+                                <select id="downloader-favorites" class="downloader-select"></select>
+                                <div class="downloader-actions downloader-actions-stack">
+                                    <button type="button" class="ghostgif-action" id="downloader-load-favorite">Load Favorite</button>
+                                    <button type="button" class="ghostgif-action ghostgif-action-secondary" id="downloader-add-favorite">Add Current</button>
+                                    <button type="button" class="ghostgif-action ghostgif-action-secondary" id="downloader-remove-favorite">Remove Selected</button>
+                                </div>
+                            </section>
+
+                            <section class="sail-panel downloader-card">
+                                <div class="sail-panel-header">
+                                    <div>
+                                        <p class="sail-panel-kicker">Output</p>
+                                        <h3>Download folder</h3>
+                                    </div>
+                                </div>
+
+                                <input type="text" id="downloader-folder" class="downloader-input" placeholder="C:/Users/Terry/Pictures/Gifs">
+                                <p class="downloader-note">Used for generated `gallery-dl` and `yt-dlp` commands.</p>
+                            </section>
+
+                            <section class="sail-panel downloader-card">
+                                <div class="sail-panel-header">
+                                    <div>
+                                        <p class="sail-panel-kicker">Stats</p>
+                                        <h3>Queue breakdown</h3>
+                                    </div>
+                                </div>
+
+                                <div class="downloader-stats">
+                                    <div class="downloader-stat">
+                                        <span class="downloader-stat-label">Profiles</span>
+                                        <span class="downloader-stat-value" id="downloader-profile-count">0</span>
+                                    </div>
+                                    <div class="downloader-stat">
+                                        <span class="downloader-stat-label">Redgifs</span>
+                                        <span class="downloader-stat-value" id="downloader-redgif-count">0</span>
+                                    </div>
+                                    <div class="downloader-stat">
+                                        <span class="downloader-stat-label">Direct Video</span>
+                                        <span class="downloader-stat-value" id="downloader-video-count">0</span>
+                                    </div>
+                                    <div class="downloader-stat">
+                                        <span class="downloader-stat-label">Unknown</span>
+                                        <span class="downloader-stat-value" id="downloader-unknown-count">0</span>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="flipwise">
+                <div class="section-header-small">
+                    <div class="small-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="smallLogoGrad9" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00f0ff"/>
+                                    <stop offset="100%" style="stop-color:#ff00d4"/>
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,10 85,32 85,68 50,90 15,68 15,32" fill="none" stroke="url(#smallLogoGrad9)" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="url(#smallLogoGrad9)"/>
+                        </svg>
+                    </div>
+                    <div class="small-brand">
+                        <h3>THE HUB</h3>
+                    </div>
+                </div>
+                <button class="back-btn" type="button">BACK</button>
+
+                <div class="section-header">
+                    <h2 class="section-title">FlipWise</h2>
+                    <p class="section-subtitle">A dedicated tile for your flipping and market workflow app.</p>
+                </div>
+
+                <div class="flipwise-layout">
+                    <section class="sail-panel flipwise-tools-card">
+                        <div class="flipwise-dashboard-topbar">
+                            <div class="flipwise-refresh-status">
+                                <span class="flipwise-status-label">Last refreshed</span>
+                                <strong id="flipwise-refresh-clock">--:--</strong>
+                                <span id="flipwise-refresh-last">Waiting for first sync</span>
+                            </div>
+                            <div class="flipwise-dashboard-actions">
+                                <label class="flipwise-auto-refresh">
+                                    <input type="checkbox" id="flipwise-auto-refresh" checked>
+                                    <span>Auto refresh (15s)</span>
+                                </label>
+                                <button type="button" class="ghostgif-action" id="flipwise-refresh-btn">Refresh Now</button>
+                            </div>
+                        </div>
+
+                        <div class="flipwise-workspace-button-grid flipwise-dashboard-button-grid">
+                            <button type="button" class="flipwise-workspace-btn active" data-flipwise-mode="dashboard" data-flipwise-label="Dashboard" data-flipwise-page="sail-tools/index.html">Dashboard</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-markets" data-flipwise-page="sail-tools/markets.html" data-flipwise-label="Markets">Markets</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-scanner" data-flipwise-page="sail-tools/scanner.html" data-flipwise-label="Trade Scanner">Trade Scanner</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-money-makers" data-flipwise-page="sail-tools/money-makers.html" data-flipwise-label="Money Makers">Money Makers</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-enchanting" data-flipwise-page="sail-tools/enchanting.html" data-flipwise-label="Enchanting">Enchanting</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-outfit-sets" data-flipwise-page="sail-tools/outfit-sets.html" data-flipwise-label="Outfit Sets">Outfit Sets</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-tree-saplings" data-flipwise-page="sail-tools/tree-saplings.html" data-flipwise-label="Tree Saplings">Tree Saplings</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-decanting" data-flipwise-page="sail-tools/decanting.html" data-flipwise-label="Decanting">Decanting</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-gem-cutting" data-flipwise-page="sail-tools/gem-cutting.html" data-flipwise-label="Gem Cutting">Gem Cutting</button>
+                            <button type="button" class="flipwise-workspace-btn" data-flipwise-mode="native-shops-to-ge" data-flipwise-page="sail-tools/shops-to-ge.html" data-flipwise-label="Shops to GE">Shops to GE</button>
+                        </div>
+                    </section>
+
+                    <section class="sail-panel flipwise-dashboard-panel">
+                            <div class="flipwise-workspace-meta">
+                                <span class="sail-panel-note" id="flipwise-current-tool">Dashboard</span>
+                            </div>
+
+                            <div class="flipwise-dashboard-content" id="flipwise-dashboard-content">
+                            <div class="flipwise-dashboard-grid">
+                                <section class="flipwise-widget">
+                                    <div class="sail-panel-header">
+                                        <div>
+                                            <p class="sail-panel-kicker">Best Opportunity</p>
+                                            <h3>Top plays right now</h3>
+                                        </div>
+                                        <span class="sail-panel-note" id="flipwise-opportunity-count">0 live entries</span>
+                                    </div>
+                                    <div class="flipwise-opportunity-list" id="flipwise-best-opportunity-list">
+                                        <div class="flipwise-empty">Loading FlipWise opportunities...</div>
+                                    </div>
+                                </section>
+
+                                <section class="flipwise-widget">
+                                    <div class="sail-panel-header">
+                                        <div>
+                                            <p class="sail-panel-kicker">Flips and Flops</p>
+                                            <h3>Market movers</h3>
+                                        </div>
+                                        <div class="flipwise-tab-row">
+                                            <button type="button" class="flipwise-tab active" data-mode="gainers">Gainers</button>
+                                            <button type="button" class="flipwise-tab" data-mode="losers">Losers</button>
+                                        </div>
+                                    </div>
+                                    <div class="flipwise-movers-list" id="flipwise-movers-list">
+                                        <div class="flipwise-empty">Waiting for market data...</div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <section class="flipwise-widget flipwise-events-widget">
+                                <div class="sail-panel-header">
+                                    <div>
+                                        <p class="sail-panel-kicker">Events</p>
+                                        <h3>Trend log</h3>
+                                    </div>
+                                    <button type="button" class="ghostgif-action ghostgif-action-secondary" id="flipwise-events-clear">Clear</button>
+                                </div>
+                                <div class="flipwise-events-log" id="flipwise-events-log">
+                                    <div class="flipwise-empty">Trend and alert events will appear here.</div>
+                                </div>
+                            </section>
+                            </div>
+
+                            <div class="flipwise-native-tool-content is-hidden" id="flipwise-native-tool-content">
+                                <div class="flipwise-native-markets is-hidden" id="flipwise-native-markets">
+                                    <div class="flipwise-market-stats">
+                                        <div class="flipwise-market-stat">
+                                            <div class="flipwise-market-stat-label">Scythe of Vitur</div>
+                                            <div class="flipwise-market-stat-value positive" id="fw-market-profit-scythe">--</div>
+                                            <div class="flipwise-market-stat-prices">
+                                                <span id="fw-market-buy-scythe">Buy: --</span>
+                                                <span id="fw-market-sell-scythe">Sell: --</span>
+                                            </div>
+                                        </div>
+                                        <div class="flipwise-market-stat">
+                                            <div class="flipwise-market-stat-label">Twisted Bow</div>
+                                            <div class="flipwise-market-stat-value positive" id="fw-market-profit-tbow">--</div>
+                                            <div class="flipwise-market-stat-prices">
+                                                <span id="fw-market-buy-tbow">Buy: --</span>
+                                                <span id="fw-market-sell-tbow">Sell: --</span>
+                                            </div>
+                                        </div>
+                                        <div class="flipwise-market-stat">
+                                            <div class="flipwise-market-stat-label">Tumeken's Shadow</div>
+                                            <div class="flipwise-market-stat-value positive" id="fw-market-profit-shadow">--</div>
+                                            <div class="flipwise-market-stat-prices">
+                                                <span id="fw-market-buy-shadow">Buy: --</span>
+                                                <span id="fw-market-sell-shadow">Sell: --</span>
+                                            </div>
+                                        </div>
+                                        <div class="flipwise-market-stat">
+                                            <div class="flipwise-market-stat-label">Torva armour set</div>
+                                            <div class="flipwise-market-stat-value positive" id="fw-market-profit-torva">--</div>
+                                            <div class="flipwise-market-stat-prices">
+                                                <span id="fw-market-buy-torva">Buy: --</span>
+                                                <span id="fw-market-sell-torva">Sell: --</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flipwise-markets-controls">
+                                        <div class="flipwise-markets-search">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="8"/>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                            </svg>
+                                            <input type="text" id="fw-markets-search" placeholder="Search Items...">
+                                            <button type="button" class="flipwise-search-clear" data-clear-target="fw-markets-search" aria-label="Clear search">×</button>
+                                        </div>
+                                        <div class="flipwise-markets-tabs">
+                                            <button type="button" class="flipwise-markets-tab active" data-filter="items">Flipping</button>
+                                            <button type="button" class="flipwise-markets-tab" data-filter="third_age">Third Age</button>
+                                            <button type="button" class="flipwise-markets-tab" data-filter="runes">Runes</button>
+                                            <button type="button" class="flipwise-markets-tab" data-filter="herblore">Herblore</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="flipwise-markets-table-card">
+                                        <div class="flipwise-markets-table-wrap">
+                                            <table class="flipwise-market-table">
+                                                <thead>
+                                                    <tr id="fw-market-table-head-row">
+                                                        <th class="market-table__th-item" data-sort="item">Item</th>
+                                                        <th class="market-table__th-num text-right" data-sort="low">Buy</th>
+                                                        <th class="market-table__th-num text-right" data-sort="high">Sell</th>
+                                                        <th class="market-table__th-num text-right" data-sort="profit">Profit</th>
+                                                        <th class="market-table__th-num text-right" data-sort="roi">ROI %</th>
+                                                        <th class="market-table__th-num text-right" data-sort="lowTime">Buy time</th>
+                                                        <th class="market-table__th-num text-right" data-sort="highTime">Sell time</th>
+                                                        <th class="market-table__th-star"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fw-markets-table-body">
+                                                    <tr><td colspan="8" class="text-muted">Items will load here.</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div id="fw-breakdown-overlay" class="flipwise-breakdown-overlay" style="display: none;" aria-hidden="true">
+                                        <div class="flipwise-breakdown-modal">
+                                            <h3 id="fw-breakdown-title">Price Breakdown</h3>
+                                            <div id="fw-breakdown-content"></div>
+                                            <button type="button" class="breakdown-close" id="fw-breakdown-close">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flipwise-native-scanner is-hidden" id="flipwise-native-scanner">
+                                    <div class="flipwise-markets-controls flipwise-scanner-controls">
+                                        <div class="flipwise-markets-search">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="8"/>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                            </svg>
+                                            <input type="text" id="fw-scanner-search" placeholder="Search items...">
+                                            <button type="button" class="flipwise-search-clear" data-clear-target="fw-scanner-search" aria-label="Clear search">×</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="flipwise-markets-table-card">
+                                        <div class="flipwise-markets-table-wrap">
+                                            <table class="flipwise-market-table">
+                                                <thead>
+                                                    <tr id="fw-scanner-table-head-row">
+                                                        <th class="market-table__th-item" data-sort="item">Item</th>
+                                                        <th class="market-table__th-num text-right" data-sort="low">Buy</th>
+                                                        <th class="market-table__th-num text-right" data-sort="high">Sell</th>
+                                                        <th class="market-table__th-num text-right" data-sort="profit">Profit</th>
+                                                        <th class="market-table__th-num text-right" data-sort="roi">ROI %</th>
+                                                        <th class="market-table__th-num text-right" data-sort="lowTime">Buy time</th>
+                                                        <th class="market-table__th-num text-right" data-sort="highTime">Sell time</th>
+                                                        <th class="market-table__th-star"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fw-scanner-table-body">
+                                                    <tr><td colspan="8" class="text-muted">Loading scanner...</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flipwise-enchanting-grid is-hidden" id="flipwise-enchanting-grid">
+                                    <div class="flipwise-empty">Loading enchanting tiles...</div>
+                                </div>
+
+                                <div class="flipwise-outfit-sets-grid is-hidden" id="flipwise-outfit-sets-grid">
+                                    <div class="flipwise-empty">Loading outfit set tiles...</div>
+                                </div>
+
+                                <div class="flipwise-native-tree-saplings is-hidden" id="flipwise-native-tree-saplings">
+                                    <p class="flipwise-native-intro">Buy the seed, plant it, sell the sapling. Profit per = sapling sell after tax minus seed cost; limit profit = profit per times seed buy limit.</p>
+                                    <div class="flipwise-markets-controls flipwise-scanner-controls">
+                                        <div class="flipwise-markets-search">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="8"/>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                            </svg>
+                                            <input type="text" id="fw-tree-saplings-search" placeholder="Search saplings...">
+                                            <button type="button" class="flipwise-search-clear" data-clear-target="fw-tree-saplings-search" aria-label="Clear search">×</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="flipwise-markets-table-card">
+                                        <div class="flipwise-markets-table-wrap">
+                                            <table class="flipwise-market-table">
+                                                <thead>
+                                                    <tr id="fw-tree-saplings-head-row">
+                                                        <th class="market-table__th-item market-table__th-sortable" data-sort="item">Item</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="seedCost">Seed</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="saplingSell">Sapling</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="profitPer">Profit per</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="limit">Limit</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="limitProfit">Limit profit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fw-tree-saplings-body">
+                                                    <tr><td colspan="6" class="text-muted">Loading saplings...</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flipwise-native-decanting is-hidden" id="flipwise-native-decanting">
+                                    <p class="flipwise-native-intro">Potion decanting: buy partial doses, combine into (4)-dose potions, sell. Columns show cost per 1/2/3-dose and approximate profit.</p>
+                                    <div class="flipwise-markets-controls flipwise-scanner-controls">
+                                        <div class="flipwise-markets-search">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="8"/>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                            </svg>
+                                            <input type="text" id="fw-decanting-search" placeholder="Search potions...">
+                                            <button type="button" class="flipwise-search-clear" data-clear-target="fw-decanting-search" aria-label="Clear search">×</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="flipwise-markets-table-card">
+                                        <div class="flipwise-markets-table-wrap">
+                                            <table class="flipwise-market-table">
+                                                <thead>
+                                                    <tr id="fw-decanting-head-row">
+                                                        <th class="market-table__th-item market-table__th-sortable" data-sort="potion">Potion</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="dose1Cost">Dose (1) Cost</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="dose2Cost">Dose (2) Cost</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="dose3Cost">Dose (3) Cost</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="cheapestDose">Cheapest dose</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="cheapestCost">Cheapest cost</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="approxSellPrice">Approx. Sell Price</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="approxProfit">Approx. Profit</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="theorizedLimit">Theorized Limit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fw-decanting-body">
+                                                    <tr><td colspan="9" class="text-muted">Loading decanting data...</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flipwise-native-gem-cutting is-hidden" id="flipwise-native-gem-cutting">
+                                    <div class="flipwise-markets-table-card">
+                                        <div class="flipwise-markets-table-wrap">
+                                            <table class="flipwise-market-table">
+                                                <thead>
+                                                    <tr id="fw-gem-cutting-head-row">
+                                                        <th class="market-table__th-item market-table__th-sortable" data-sort="item">Gem (Uncut)</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="uncutPrice">GE Price</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="cutValue">Cut Value</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="profit">Profit/Loss</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="geLimit">GE Limit</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="limitProfit">Limit Profit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fw-gem-cutting-body">
+                                                    <tr><td colspan="6" class="text-muted">Loading gem cutting data...</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flipwise-native-shops-to-ge is-hidden" id="flipwise-native-shops-to-ge">
+                                    <p class="flipwise-native-intro">Buy items from shops at a fixed price, then sell on the GE. GE Value uses the higher of buy/sell, minus tax. Profit is shown per item and per GE limit.</p>
+                                    <div class="flipwise-markets-table-card">
+                                        <div class="flipwise-markets-table-wrap">
+                                            <table class="flipwise-market-table">
+                                                <thead>
+                                                    <tr id="fw-shops-to-ge-head-row">
+                                                        <th class="market-table__th-item market-table__th-sortable" data-sort="shop">Shop</th>
+                                                        <th class="market-table__th-item market-table__th-sortable" data-sort="item">Item</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="shopCost">Shop Cost</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="geAfterTax">GE Value</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="profitPer">Profit</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="geLimit">GE Limit</th>
+                                                        <th class="market-table__th-num text-right market-table__th-sortable" data-sort="profitLimit">Limit Profit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fw-shops-to-ge-body">
+                                                    <tr><td colspan="7" class="text-muted">Loading shops to GE data...</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flipwise-money-makers-grid" id="flipwise-money-makers-grid">
+                                    <div class="flipwise-empty">Loading money maker tiles...</div>
+                                </div>
+                            </div>
+
+                            <div class="flipwise-table-frame-shell is-hidden" id="flipwise-table-frame-shell">
+                                <iframe
+                                    id="flipwise-tool-frame"
+                                    class="flipwise-tool-frame"
+                                    title="FlipWise tool workspace"
+                                    src="sail-tools/markets.html"
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer" id="mainFooter">
+            <p>Â© 2026 THE HUB. Designed by MinMax Technology LLC.</p>
+        </footer>
+    </div>
+
+    <div class="ghostgif-lightbox" id="ghostgif-lightbox" aria-hidden="true">
+        <button type="button" class="ghostgif-lightbox-close" id="ghostgif-lightbox-close">Close</button>
+        <video id="ghostgif-lightbox-video" class="ghostgif-lightbox-video" controls playsinline hidden></video>
+        <img id="ghostgif-lightbox-image" class="ghostgif-lightbox-image" alt="Expanded GhostGIF media" hidden>
+    </div>
+
+    <div class="confirm-modal" id="confirm-modal" aria-hidden="true">
+        <div class="confirm-modal-backdrop" id="confirm-modal-backdrop"></div>
+        <div class="confirm-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+            <h3 id="confirm-modal-title">Exposed IP detected</h3>
+            <p class="confirm-modal-text" id="confirm-modal-text">Your IP is on the flagged list. Do you want to open this link anyway?</p>
+            <div class="confirm-modal-actions">
+                <button type="button" class="confirm-modal-button confirm-modal-cancel" id="confirm-modal-cancel">Cancel</button>
+                <button type="button" class="confirm-modal-button confirm-modal-confirm" id="confirm-modal-confirm">Open Link</button>
+            </div>
+        </div>
+    </div>
+<script src="sail-tools/js/flipwise-data.js"></script>
+<script src="sail-tools/js/flipwise-alerts.js"></script>
+<script src="sail-tools/js/flipwise-context-menu.js"></script>
+<script src="sail-tools/js/flipwise-api.js"></script>
+<script src="templatemo-nexa-scripts.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
