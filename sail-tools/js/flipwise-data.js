@@ -420,7 +420,8 @@ Flipwise.FLIP_ITEMS = [
   { id: 30634, name: "Twinflame staff" },
   { id: 29625, name: "Armageddon weapon scroll" },
   { id: 32093, name: "Inky paint" },
-  { id: 32110, name: "Merchant's paint" }
+  { id: 32110, name: "Merchant's paint" },
+  { id: 33631, name: "Crimson kisten" }
 ];
 
 Flipwise.HIGH_VOLUME_ITEMS = [
